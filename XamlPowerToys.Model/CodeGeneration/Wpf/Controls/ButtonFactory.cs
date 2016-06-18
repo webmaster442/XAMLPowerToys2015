@@ -22,7 +22,7 @@
         public String MakeControl(Int32? parentGridColumn = null, Int32? parentGridRow = null) {
             var sb = new StringBuilder("<Button ");
             if (!String.IsNullOrWhiteSpace(_model.BindingPath)) {
-                sb.AppendFormat("Command=\"{0}\" ", Helpers.ConstructBinding(_model.BindingPath, _model.BindingMode, String.Empty));
+                sb.AppendFormat("Command=\"{0}\" ", Helpers.ConstructBinding(_model.BindingPath, _model.BindingMode, String.Empty, _model.BindingConverter));
             }
             if (parentGridColumn != null) {
                 sb.Append($"Grid.Column=\"{parentGridColumn.Value}\" ");

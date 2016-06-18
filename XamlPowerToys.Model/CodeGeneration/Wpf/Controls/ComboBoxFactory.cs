@@ -22,7 +22,7 @@
         public string MakeControl(Int32? parentGridColumn = null, Int32? parentGridRow = null) {
             var sb = new StringBuilder("<ComboBox ");
             if (!String.IsNullOrWhiteSpace(_model.BindingPath)) {
-                sb.AppendFormat("{0}=\"{1}\" ", _model.EditorProperties.EditorBindingTargetProperty, Helpers.ConstructBinding(_model.BindingPath, _model.BindingMode, _model.StringFormatText));
+                sb.AppendFormat("{0}=\"{1}\" ", _model.EditorProperties.EditorBindingTargetProperty, Helpers.ConstructBinding(_model.BindingPath, _model.BindingMode, _model.StringFormatText, _model.BindingConverter));
             }
 
             if (parentGridColumn != null) {

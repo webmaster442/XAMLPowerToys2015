@@ -169,7 +169,9 @@
 
             LoadPropertyInformation(assemblyDefinition, typeDefinition, classEntity);
 
-            var vm = new CreateFormViewModel(classEntity);
+            var emptyConverterList = new List<String>();
+
+            var vm = new CreateFormViewModel(classEntity, emptyConverterList);
             var view = new CreateFormView();
             this.DataContext = vm;
             this.rootGrid.Children.Add(view);

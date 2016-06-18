@@ -5,6 +5,8 @@
 
     public abstract class FormComponentModelBase {
 
+        public String BindingConverter => ViewModel.BindingConverter;
+
         public BindingMode BindingMode => this.ViewModel.BindingMode;
 
         public String BindingPath => this.ViewModel.BindingPath;

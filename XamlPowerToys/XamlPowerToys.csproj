@@ -58,6 +58,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PackageCommands\XamlPowerToysCommand.cs" />
     <Compile Include="Reflection\TypeReflector.cs" />
+    <Compile Include="Reflection\TypeReflectorResult.cs" />
     <Compile Include="source.extension.cs">
       <DependentUpon>source.extension.vsixmanifest</DependentUpon>
     </Compile>

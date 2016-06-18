@@ -22,7 +22,7 @@
         public string MakeControl(Int32? parentGridColumn = null, Int32? parentGridRow = null) {
             var sb = new StringBuilder("<TimePicker ");
             if (!String.IsNullOrWhiteSpace(_model.BindingPath)) {
-                sb.AppendFormat("Time=\"{0}\" ", Helpers.ConstructBinding(_model.BindingPath, _model.BindingMode, String.Empty));
+                sb.AppendFormat("Time=\"{0}\" ", Helpers.ConstructBinding(_model.BindingPath, _model.BindingMode, String.Empty, _model.BindingConverter));
             }
 
             if (!String.IsNullOrWhiteSpace(_model.StringFormat)) {

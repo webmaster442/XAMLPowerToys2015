@@ -33,10 +33,10 @@
             try {
                 var xamlFileClassName = Path.GetFileNameWithoutExtension(_dte2.ActiveDocument.Name);
                 var typeReflector = new TypeReflector();
-                var selectedClassEntity = typeReflector.SelectClassFromAllReferencedAssemblies(_activeProject, xamlFileClassName, "Data Form Generator", _projectType, _projectFrameworkVersion);
-                if (selectedClassEntity != null) {
+                var typeReflectorResult = typeReflector.SelectClassFromAllReferencedAssemblies(_activeProject, xamlFileClassName, "Data Form Generator", _projectType, _projectFrameworkVersion);
+                if (typeReflectorResult != null) {
                     var win = new XamlPowerToysWindow();
-                    var vm = new CreateFormViewModel(selectedClassEntity);
+                    var vm = new CreateFormViewModel(typeReflectorResult.ClassEntity, typeReflectorResult.AvailableConverters);
                     var view = new CreateFormView();
                     win.DataContext = vm;
                     win.rootGrid.Children.Add(view);

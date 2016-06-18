@@ -32,11 +32,11 @@
         Boolean _showGenerateForm;
         Double _uIScaleFactor = 1.00;
 
-        public String ResultXaml { get; private set; } = String.Empty;
-
         public EventHandler CloseWindow;
 
         public IEnumerable<String> AvailableCommands { get; }
+
+        public IEnumerable<String> AvailableConverters { get; }
 
         public IEnumerable<String> AvailableDateProperties { get; }
 
@@ -125,6 +125,8 @@
             }
         }
 
+        public String ResultXaml { get; private set; } = String.Empty;
+
         public Boolean RootObjectSelectionIsEnabled {
             get { return _rootObjectSelectionIsEnabled; }
             set {
@@ -175,7 +177,7 @@
             }
         }
 
-        public CreateFormViewModel(ClassEntity classEntity) {
+        public CreateFormViewModel(ClassEntity classEntity, IEnumerable<String> availableConverters) {
             if (classEntity == null) {
                 throw new ArgumentNullException(nameof(classEntity));
             }
@@ -207,6 +209,7 @@
             this.AvailableCommands = GetAvailableCommands();
             this.AvailableEnumerableProperties = GetAvailableEnumerableProperties();
             this.AvailableNumericProperties = GetAvailableNumericProperties();
+            this.AvailableConverters = availableConverters;
             this.GenerateFormModel = new GenerateFormModel(classEntity.ProjectType);
             this.NonBindingControlsCollection = GetNonBindingControlsCollection();
         }
@@ -229,7 +232,7 @@
             }
 
             this.GenerateFormModel.CreateObjectDefinition = this.SelectedCreateObjectDefinition;
-            
+
             var codeGenerator = new UIGeneration();
 
             try {

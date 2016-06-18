@@ -22,17 +22,17 @@
         public string MakeControl(Int32? parentGridColumn = null, Int32? parentGridRow = null) {
             var sb = new StringBuilder("<Slider ");
             if (!String.IsNullOrWhiteSpace(_model.BindingPath)) {
-                sb.AppendFormat("Value=\"{0}\" ", Helpers.ConstructBinding(_model.BindingPath, _model.BindingMode, _model.StringFormatText));
+                sb.AppendFormat("Value=\"{0}\" ", Helpers.ConstructBinding(_model.BindingPath, _model.BindingMode, _model.StringFormatText, _model.BindingConverter));
             }
 
             if (!String.IsNullOrWhiteSpace(_model.EditorProperties.MinimumPathText)) {
-                sb.AppendFormat("Minimum=\"{0}\" ", Helpers.ConstructBinding(_model.EditorProperties.MinimumPathText, _model.BindingMode, String.Empty));
+                sb.AppendFormat("Minimum=\"{0}\" ", Helpers.ConstructBinding(_model.EditorProperties.MinimumPathText, _model.BindingMode, String.Empty, _model.BindingConverter));
             } else {
                 sb.Append($"Minimum=\"{_model.EditorProperties.Minimum}\" ");
             }
 
             if (!String.IsNullOrWhiteSpace(_model.EditorProperties.MaximumPathText)) {
-                sb.AppendFormat("Maximum=\"{0}\" ", Helpers.ConstructBinding(_model.EditorProperties.MaximumPathText, _model.BindingMode, String.Empty));
+                sb.AppendFormat("Maximum=\"{0}\" ", Helpers.ConstructBinding(_model.EditorProperties.MaximumPathText, _model.BindingMode, String.Empty, _model.BindingConverter));
             } else {
                 sb.Append($"Maximum=\"{_model.EditorProperties.Maximum}\" ");
             }

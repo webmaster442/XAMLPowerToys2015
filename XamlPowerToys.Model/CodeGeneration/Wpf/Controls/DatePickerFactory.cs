@@ -22,7 +22,7 @@
         public String MakeControl(Int32? parentGridColumn = null, Int32? parentGridRow = null) {
             var sb = new StringBuilder("<DatePicker ");
             if (!String.IsNullOrWhiteSpace(_model.BindingPath)) {
-                sb.AppendFormat("SelectedDate=\"{0}\" ", Helpers.ConstructBinding(_model.BindingPath, _model.BindingMode, String.Empty, IncludeValidationAttributes.Yes));
+                sb.AppendFormat("SelectedDate=\"{0}\" ", Helpers.ConstructBinding(_model.BindingPath, _model.BindingMode, String.Empty, _model.BindingConverter, IncludeValidationAttributes.Yes));
             }
 
             if (!String.IsNullOrWhiteSpace(_model.StringFormat)) {
@@ -30,7 +30,7 @@
             }
 
             if (!String.IsNullOrWhiteSpace(_model.EditorProperties.DisplayDateStartPathText)) {
-                sb.AppendFormat("DisplayDateStart=\"{0}\" ", Helpers.ConstructBinding(_model.EditorProperties.DisplayDateStartPathText, _model.BindingMode, String.Empty));
+                sb.AppendFormat("DisplayDateStart=\"{0}\" ", Helpers.ConstructBinding(_model.EditorProperties.DisplayDateStartPathText, _model.BindingMode, String.Empty, _model.BindingConverter));
             } else if (_model.EditorProperties.SetDisplayDatStartToDateTimeNow) {
                 sb.Append($"DisplayDateStart=\"{{x:Static sys:DateTime.Now}}\" ");
             } else if (_model.EditorProperties.DisplayDateStart.HasValue) {
@@ -38,7 +38,7 @@
             }
 
             if (!String.IsNullOrWhiteSpace(_model.EditorProperties.DisplayDateEndPathText)) {
-                sb.AppendFormat("DisplayDateEnd=\"{0}\" ", Helpers.ConstructBinding(_model.EditorProperties.DisplayDateEndPathText, _model.BindingMode, String.Empty));
+                sb.AppendFormat("DisplayDateEnd=\"{0}\" ", Helpers.ConstructBinding(_model.EditorProperties.DisplayDateEndPathText, _model.BindingMode, String.Empty, _model.BindingConverter));
             } else if (_model.EditorProperties.SetDisplayDateEndToDateTimeNow) {
                 sb.Append($"DisplayDateEnd=\"{{x:Static sys:DateTime.Now}}\" ");
             } else if (_model.EditorProperties.DisplayDateEnd.HasValue) {

@@ -16,9 +16,9 @@
 
         public String NamespaceName => this.TypeDefinition.Namespace;
 
-        public ProjectType ProjectType { get; }
-
         public string ProjectFrameworkVersion { get; }
+
+        public ProjectType ProjectType { get; }
 
         public ObservableCollection<PropertyInformationViewModel> PropertyInformationCollection { get; }
 

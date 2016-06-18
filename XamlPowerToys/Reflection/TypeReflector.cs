@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.IO;
+    using System.Linq;
     using EnvDTE;
     using Mono.Cecil;
     using VSLangProj;
@@ -14,7 +15,7 @@
 
     public class TypeReflector {
 
-        public ClassEntity SelectClassFromAllReferencedAssemblies(Project sourceProject, String xamlFileClassName, String sourceCommandName, ProjectType projectFrameworkType, String projectFrameworkVersion) {
+        public TypeReflectorResult SelectClassFromAllReferencedAssemblies(Project sourceProject, String xamlFileClassName, String sourceCommandName, ProjectType projectFrameworkType, String projectFrameworkVersion) {
             if (sourceProject == null) {
                 throw new ArgumentNullException(nameof(sourceProject));
             }
@@ -74,11 +75,14 @@
                 ReflectClasses(AssemblyDefinition.ReadAssembly(asyPath.ToString(), asyReader), projectFrameworkType, projectFrameworkVersion, classEntities);
             }
 
+            var listOfConverters = new List<String>();
+            listOfConverters.AddRange(classEntities.Where(x => x.ClassName.ToLower().EndsWith("converter")).Select(n => n.ClassName).ToList());
+
             var view = new SelectClassFromAssembliesView(classEntities, sourceCommandName, xamlFileClassName);
             var result = view.ShowDialog();
             if (result.HasValue && result.Value && view.SelectedClassEntity != null) {
-                LoadPropertyInformation(view.SelectedClassEntity.AssemblyDefinition, view.SelectedClassEntity.TypeDefinition, view.SelectedClassEntity, assembliesToLoad);
-                return view.SelectedClassEntity;
+                LoadPropertyInformation(view.SelectedClassEntity.TypeDefinition, view.SelectedClassEntity, assembliesToLoad);
+                return new TypeReflectorResult(view.SelectedClassEntity, listOfConverters);
             }
 
             return null;
@@ -213,11 +217,11 @@
             return typeName.Contains("Collection") || typeName.Contains("Enumerable");
         }
 
-        void LoadPropertyInformation(AssemblyDefinition assemblyDefinition, TypeDefinition typeDefinition, ClassEntity classEntity, Hashtable assembliesToLoad, String parentPropertyName = "") {
+        void LoadPropertyInformation(TypeDefinition typeDefinition, ClassEntity classEntity, Hashtable assembliesToLoad, String parentPropertyName = "") {
             foreach (var property in GetAllPropertiesForType(typeDefinition, assembliesToLoad)) {
                 TypeDefinition td = property.PropertyType as TypeDefinition;
                 if (td == null) {
-                    var tr = property.PropertyType as TypeReference;
+                    var tr = property.PropertyType;
                     if (tr != null) {
                         td = tr.Resolve();
                     }
@@ -268,7 +272,7 @@
                         var childTypeDefinition = td;
                         var childAssemblyDefinition = td.Module.Assembly;
                         pi.ClassEntity = new ClassEntity(childAssemblyDefinition, childTypeDefinition, classEntity.ProjectType, "");
-                        LoadPropertyInformation(childAssemblyDefinition, childTypeDefinition, pi.ClassEntity, assembliesToLoad, pi.Name);
+                        LoadPropertyInformation(childTypeDefinition, pi.ClassEntity, assembliesToLoad, pi.Name);
                     }
                 }
             }

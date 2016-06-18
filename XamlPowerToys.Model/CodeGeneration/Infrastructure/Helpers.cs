@@ -5,12 +5,16 @@
 
     public static class Helpers {
 
-        public static String ConstructBinding(String path, BindingMode bindingMode, String stringFormatText, IncludeValidationAttributes includeValidationAttributes = IncludeValidationAttributes.No) {
+        public static String ConstructBinding(String path, BindingMode bindingMode, String stringFormatText, String converter, IncludeValidationAttributes includeValidationAttributes = IncludeValidationAttributes.No) {
             var validationAttributes = String.Empty;
+            var converterText = String.Empty;
             if (includeValidationAttributes == IncludeValidationAttributes.Yes) {
                 validationAttributes = ", ValidatesOnDataErrors=True, ValidatesOnNotifyDataErrors=True, ValidatesOnExceptions=True";
             }
-            return $"{{Binding Path={path}, Mode={bindingMode}{stringFormatText}{validationAttributes}}}";
+            if (!String.IsNullOrWhiteSpace(converter)) {
+                converterText = $" Converter={{StaticResource {converter}}}, ";
+            }
+            return $"{{Binding Path={path},{converterText}Mode={bindingMode}{stringFormatText}{validationAttributes}}}";
         }
 
         public static String ParseGridLength(GridLength gridLength) {

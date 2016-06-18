@@ -1,7 +1,6 @@
 # Roadmap
 
-- [x] A feature that has been completed
-- [ ] A feature that has NOT yet been completed
+- [ ] Add support for Xamarin Forms UWP, waiting for someone to ask for it.
 
 Features that have a checkmark are complete and available for
 download in the
@@ -9,21 +8,11 @@ download in the
 
 # Changelog
 
-These are the changes to each version that has been released
-on the official Visual Studio extension gallery.
-
-## 1.1
-
-**2016-06-06**
-
-- [x] Feature 3
-- [x] Feature 4
+These are the changes to each version that has been released on the official Visual Studio extension gallery.
 
 ## 1.0
 
-**2016-06-05**
+**2016-06-18**
 
 - [x] Initial release
-- [x] Feature 1
-- [x] Feature 2
-  - [x] Sub feature
+- [x] Rapid Data Form Creation for Xamarin Forms and WPF

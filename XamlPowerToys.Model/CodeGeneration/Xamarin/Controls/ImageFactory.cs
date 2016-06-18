@@ -22,7 +22,7 @@
         public String MakeControl(Int32? parentGridColumn = null, Int32? parentGridRow = null) {
             var sb = new StringBuilder("<Image ");
             if (!_model.IsNonBindingControl && !String.IsNullOrWhiteSpace(_model.BindingPath)) {
-                sb.AppendFormat("Source=\"{0}\" ", Helpers.ConstructBinding(_model.BindingPath, _model.BindingMode, _model.StringFormatText));
+                sb.AppendFormat("Source=\"{0}\" ", Helpers.ConstructBinding(_model.BindingPath, _model.BindingMode, _model.StringFormatText, _model.BindingConverter));
             } else if (_model.IsNonBindingControl && !String.IsNullOrWhiteSpace(_model.EditorProperties.Source)) {
                 sb.AppendFormat($"Source=\"{_model.EditorProperties.Source}\" ");
             }

@@ -52,7 +52,15 @@
             }
         }
 
-        private void LbViewModels_SelectionChanged(Object sender, SelectionChangedEventArgs e) {
+        void btnCancel_Click(Object sender, RoutedEventArgs e) {
+            this.DialogResult = false;
+        }
+
+        void btnNext_Click(Object sender, RoutedEventArgs e) {
+            this.DialogResult = true;
+        }
+
+        void LbViewModels_SelectionChanged(Object sender, SelectionChangedEventArgs e) {
             if (this.lbViewModels.SelectedItem != null) {
                 this.SelectedClassEntity = (ClassEntity)this.lbViewModels.SelectedItem;
                 this.btnNext.IsEnabled = true;
@@ -60,14 +68,6 @@
                 this.btnNext.IsEnabled = false;
                 this.SelectedClassEntity = null;
             }
-        }
-
-        void btnCancel_Click(Object sender, RoutedEventArgs e) {
-            this.DialogResult = false;
-        }
-
-        void btnNext_Click(Object sender, RoutedEventArgs e) {
-            this.DialogResult = true;
         }
 
         void tvObjects_SelectedItemChanged(Object sender, RoutedPropertyChangedEventArgs<Object> e) {

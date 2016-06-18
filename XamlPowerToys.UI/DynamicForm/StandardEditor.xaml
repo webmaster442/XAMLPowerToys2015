@@ -1,7 +1,7 @@
 ﻿<UserControl x:Class="XamlPowerToys.UI.DynamicForm.StandardEditor"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:XamlPowerToys.UI.DynamicForm"
+             xmlns:dynamicForm="clr-namespace:XamlPowerToys.UI.DynamicForm"
              xmlns:validationRules="clr-namespace:XamlPowerToys.UI.ValidationRules"
              xmlns:converters="clr-namespace:XamlPowerToys.UI.Converters">
     <UserControl.Resources>
@@ -84,7 +84,7 @@
 
             <CheckBox Grid.Column="4" Content="Show Label" IsChecked="{Binding Path=ShowLabel, Mode=TwoWay}"/>
 
-            <StackPanel Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:CreateFormView}}, Path=DataContext.GenerateFormModel.ShowTableSectionTitle, Converter={StaticResource booleanToVisibilityConverter}}" Grid.Column="5" Margin="15,0,5,0" Orientation="Horizontal" HorizontalAlignment="Right">
+            <StackPanel Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type dynamicForm:CreateFormView}}, Path=DataContext.GenerateFormModel.ShowTableSectionTitle, Converter={StaticResource booleanToVisibilityConverter}}" Grid.Column="5" Margin="15,0,5,0" Orientation="Horizontal" HorizontalAlignment="Right">
                 <TextBlock Text="Table Section Title" />
                 <TextBox Margin="5,0,0,0" Width="100">
                     <TextBox.Style>
@@ -108,8 +108,8 @@
         </Grid>
 
         <ContentControl KeyboardNavigation.IsTabStop="False" x:Name="controlSpecificContent"/>
-        
-        <Grid Margin="0,10,0,0" Visibility="{Binding Path=DataContext.ShowExpandAdvancedOptions, Converter={StaticResource booleanToVisibilityConverter}, RelativeSource={RelativeSource AncestorType={x:Type local:CreateFormView}}}">
+
+        <Grid Margin="0,10,0,0" Visibility="{Binding Path=DataContext.ShowExpandAdvancedOptions, Converter={StaticResource booleanToVisibilityConverter}, RelativeSource={RelativeSource AncestorType={x:Type dynamicForm:CreateFormView}}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="100"/>
                 <ColumnDefinition Width="175"/>
@@ -118,11 +118,24 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
 
             <CheckBox Grid.Column="0" Grid.ColumnSpan="2" Margin="0,10,0,0" Content="Include Next Control In Row" IsChecked="{Binding Path=IncludeNextControlInRow, Mode=TwoWay}"/>
             <TextBlock Grid.Column="2" Margin="0,10,0,0" Text="Row Item Width" />
             <TextBox Grid.Column="3" Text="{Binding Path=CellWidthText, Mode=TwoWay, ValidatesOnDataErrors=True, ValidatesOnExceptions=True, ValidatesOnNotifyDataErrors=True, TargetNullValue=''}" Margin="0,10,0,0" Width="75" HorizontalAlignment="Left"/>
 
+            <TextBlock Margin="0,10,0,0" Text="Converter" Grid.Row="1" ToolTip="Select the binding converter required for this property."/>
+            <ComboBox Grid.Column="1"
+                      Grid.Row="1"
+                      Margin="0,10,0,0"
+                      ToolTip="Select the binding converter required for this property."
+                      Width="165"
+                      HorizontalAlignment="Left"
+                      ItemsSource="{Binding Path=DataContext.AvailableConverters, RelativeSource={RelativeSource AncestorType={x:Type dynamicForm:CreateFormView}}}"
+                      SelectedValue="{Binding Path=BindingConverter, Mode=TwoWay}" />
         </Grid>
     </StackPanel>
 </UserControl>

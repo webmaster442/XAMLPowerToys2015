@@ -13,24 +13,166 @@ Visual Studio 2015 extension that enables developers to rapidly generate data en
 
 See the [changelog](CHANGELOG.md) for changes and roadmap.
 
+## Training Videos
+
+To get the most our of XAML Power Toys and to create complex forms like the ones pictured below ***PLEASE*** take a few minutes and watch the training vidoes.
+
+**Training Videos** on my blog [here](https://oceanware.wordpress.com/xaml-power-toys/)
+
 ## Features
 
-- Feature 1
-- Feature 2
-  - Sub feature
+- Rapid Data Entry Form Creation from View Model or Entity Class
 
-### Feature 1
-Describe feature 1. Add screenshots/code samples etc.
+### Rapid Data Entry Form Creation
 
-### Feature 2
-Describe feature 2. Add screenshots/code samples etc.
+**NOTE:** the below images and property names in this documentation, were taken from a Xamarin Forms application.  When using the tool for WPF, some options will not be displayed or different ones will be displayed.
 
-#### Sub feature
-Describe sub feature. Add screenshots/code samples etc.
+Creating a data bound, data entry form with XAML Power Toys is very simple. You'll use drag and drop to specifiy the desired data form controls on a friendly layout surface.
 
-## Contribute
-Check out the [contribution guidelines](CONTRIBUTING.md)
-if you want to contribute to this project.
+The end result will be a data entry form that renders well across platforms, with all data bindings, format strings, etc. set the way you would had you hand coded the form.
+
+**Easy Workflow**
+
+* Start XAML Power Toys
+* Select Source Class
+* Optionally Set Form Options
+* Drag and Drop Properties to Layout Surface
+* Optionally Set Control Options
+* Optionally Set Generate UI Options
+* Generate UI
+
+#### Start XAML Power Toys
+From a XAML file in a Xamarin Forms or WPF project, right click in the editor where you want your form to be inserted.
+
+**NOTE:** You must **build** your solution if you've mades changes to any view model or entity class **BEFORE** opening XAML Power Toys. This tool uses reflection to load up your solution's view models and entity classes.
+
+![Context Menu](Art/context-menu.png)
+
+#### Select Source Class
+After clicking the XAML Power Toys command in the context menu, the below Select Source Class dialog appears.
+
+![Select Source Class](Art/select-source-class.png)
+
+When the dialog opens: it loads the left list box will all classes where their name ends with ViewModel; case insensitive, and it loads up all classes by assembly, namespace, class name in the tree view on the right.
+
+It attempts to locate a view model for the active XAML file by naming convention.  
+
+If one is found, it will be selected in the ViewModels list box on the left and the Next... button will be enabled.
+
+If one is not found by naming convention, the Next... button will be disabled until you selected either a view model from the ViewModels list box or a class from the Assemblies tree view.
+
+After clicking the Next... button the XAML Power Toys Form Layout Tool dialog will appear.
+#### Form Layout Tool
+![Form Layout](Art/form-layout.png)
+
+**Description**
+
+* On the left:
+  * The icon at the top indicates the platform this form is targetting.  In this case, Xamarin Forms.
+  * The selected type name is displayed.  In this example **PersonEditorViewModel**.
+  * Each of the selected type properties are displayed in the list box.
+  * The (r) indicates a read-only property.
+  * Below the class properties are a list of Unbound Controls that can be added to form.
+* On the top:
+  * Very top right are + and - buttons for zooming the tool in or out.
+  * The rendered Label Position is set by selecting the position you want the form label to appear.
+  * The Show Expanded View check box, will cause the items on the right side to expand or contract.
+  * The Show Advanced Options check box, will cause the Advance Options to be displayed for each item.
+  * The Column Root Object radio button group allows the developer to select the root control for the form.
+  * The properties in **BOLD**, are drillable. To drill into a property, double click the **BOLD** name.
+  * After drilling into a property, that class's properties will be displayed as pictured below.
+  * To return to the parent class, click the black, back arrow icon.
+
+![After Drilling](Art/after-drilling.png)
+
+**Simple Usage**
+
+* To add controls to your form, drag and drop a property from the list box to the layout surface.
+* In the below image, I've dragged the FirstName and LastName properties to the layout surface:
+  * The Path for the Entry control Text property is set to Person.FirstName.
+  * The Control Label and Placeholder text have been defaulted by splitting the property name at each capital letter.
+  * The Control has been defaulted based on the property data type.  You can change it if required for your application.
+  * The Keyboard as been defaulted bassed on the property data type.  You can changed it if required for your application.
+* You can reorder the controls by dragging them up or down in the layout surface.
+* You can remove a control by dragging it back to the properties listing it was dragged from.
+
+![After Dragging One](Art/after-dragging-one.png)
+
+**Generate UI**
+I'm now happy with my two field form. It will be rendered in a stack layout and have the control labels positioned above each control.
+
+Click the Next... button and the XAML UI Generation Options are displayed.
+
+You can optionally wrap the form in a top level control.  For example, a scroll viewer for mobile forms.
+
+You can optionally add names to all your controls.
+
+You can optinally add a form header to the generated UI.
+
+![Generate Ui](Art/generate-ui.png)
+
+Click the Generate UI button and the folowing form will be inserted into your XAML file where you opened the context menu.
+
+![Generated Xaml](Art/generated-xaml.png)
+
+If run the Xamarin Forms UWP application, the UI looks like this:
+
+![Uwp Runtime](Art/uwp-runtime.png)
+
+## Example Forms Created With XAML Power Toys
+With a little stying, these forms would look great and took less than a minute to create each one.
+
+| IOS TableView Form  | Country BindablePicker  |
+|---|---|
+| ![Ios Table View](Art/ios-table-view.png)  | ![Ios Table View Country](Art/ios-table-view-country.png)  |
+
+
+| IOS Form With Images  | Book Detail Form  |
+|---|---|
+| ![Ios Form With Images](Art/ios-form-with-images.png)  | ![Book Detail](Art/book-detail.png)  |
+
+### How to create a form with City State Zip controls next to each other
+
+Have a look at the above application sample images that have the City, State, and Zip on the same row.
+
+The below image pictures the required settings to accomplish this.
+
+**Table Section Title**
+
+This form's Column Root Object is a Table View.  Table views group controls in sections.  In the below image, all fields are grouped in the "Address" section.
+
+**City**
+
+* Control Label is changed to City State Zip
+* Include Next Control In Row is checked (this causes State to be placed next to City)
+* Changed the Row Item Width to * (star)
+
+**State**
+
+* Show Label is unchecked (prevents the label from being rendered)
+* Include Next Control In Row is checked  (this causes Zip to be placed next to State)
+* Left Row Item Width to Auto, you could also specify a numeric control width
+
+**State**
+
+* Show Label is unchecked (prevents the label from being rendered)
+* Set the Row Item Width to Auto, you could also specify a numeric control width
+
+
+**BindablePicker**
+
+The BindablePicker control is one I created and blogged about [here](https://oceanware.wordpress.com/2016/06/13/xamarin-forms-bindable-picker/)
+
+You can also get it in the XAML Power Toys Demo repro [here](https://github.com/Oceanware/XamlPowerToysDemo)
+
+You can see two of the supported scenarios:  
+
+* States is bound to a list of Strings
+* Countries is bound to a list of Country objects. Notice for Country, the DisplayMemberPath and SelectedValuePath are both set.
+
+The States and Countries collections are exposed on the view model, making the task of setting up data bindings trival.
+
+![City State Zip Country](Art/city-state-zip-country.png)
 
 For cloning and building this project yourself, make sure
 to install the

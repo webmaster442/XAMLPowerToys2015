@@ -11,6 +11,7 @@
     [Serializable]
     public class PropertyInformationViewModel : ObservableObject, IComparable<PropertyInformationViewModel>, IEquatable<PropertyInformationViewModel> {
 
+        String _bindingConverter = String.Empty;
         BindingMode _bindingMode = BindingMode.Default;
         String _cellWidthText;
         ControlDefinition _controlDefinition;
@@ -27,6 +28,14 @@
         String _stringFormat = String.Empty;
         String _tableSectionTitle = "CHANGE";
         Int32? _width;
+
+        public String BindingConverter {
+            get { return _bindingConverter; }
+            set {
+                _bindingConverter = value;
+                RaisePropertyChanged();
+            }
+        }
 
         public BindingMode BindingMode {
             get { return _bindingMode; }
@@ -383,7 +392,7 @@
                 return;
             }
 
-            if (!CanWrite) {
+            if (!CanWrite && this.TypeName != "ICommand") {
                 this.ControlDefinition = this.ControlDefinitions.First(x => x.ControlType == ControlType.WpfTextBlock);
                 return;
             }
@@ -471,7 +480,7 @@
                 return;
             }
 
-            if (!CanWrite) {
+            if (!CanWrite && this.TypeName != "ICommand") {
                 this.ControlDefinition = this.ControlDefinitions.First(x => x.ControlType == ControlType.XamarinLabel);
                 return;
             }
