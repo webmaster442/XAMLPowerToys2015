@@ -12,9 +12,9 @@
                 validationAttributes = ", ValidatesOnDataErrors=True, ValidatesOnNotifyDataErrors=True, ValidatesOnExceptions=True";
             }
             if (!String.IsNullOrWhiteSpace(converter)) {
-                converterText = $" Converter={{StaticResource {converter}}}, ";
+                converterText = $"Converter={{StaticResource {converter}}}, ";
             }
-            return $"{{Binding Path={path},{converterText}Mode={bindingMode}{stringFormatText}{validationAttributes}}}";
+            return $"{{Binding Path={path}, {converterText}Mode={bindingMode}{stringFormatText}{validationAttributes}}}";
         }
 
         public static String ParseGridLength(GridLength gridLength) {

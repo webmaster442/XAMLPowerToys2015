@@ -1,8 +1,8 @@
 # XAML Power Toys for Visual Studio 2015
 
+[![Build status](https://ci.appveyor.com/api/projects/status/ns2n4aew6xx5txfd?svg=true)](https://ci.appveyor.com/project/kdawg1406/xamlpowertoys2015)
 
 ---------------------------------------
-
 
 Visual Studio 2015 extension that enables developers to rapidly generate data entry forms from view models or entity objects for Xamarin Forms or WPF.
 
@@ -17,6 +17,17 @@ Unfortunately, at this time, I don't have the cycles to work with Pull Requests.
 To get the most our of XAML Power Toys, and to create complex forms like the ones pictured below ***PLEASE*** take a few minutes and watch the training vidoes.
 
 **Training Videos** on my blog [here](https://oceanware.wordpress.com/xaml-power-toys/)
+
+##Primary Scenario##
+
+At the writing of this, the primary scenario for Xamarin Forms is pages that don't require Platform specific features to accomplish the layout, navigation, animation, or functional implementation.
+
+This tool is designed to enable the developer to rapidly create cross-platform data bound, data entry forms.
+
+While adopting the MVVM pattern is not a requirement to create forms with the tool, it is designed to fully support creating forms with a view model as the BindingContext or DataContext. Using the MVVM pattern has long been a best practice for developing XAML applications, this tool's happy path is form development against view models.
+
+The XAML that the tool generates, is similar to clean hand-coded XAML. Clean XAML is easily styleable because few if any Element properties have values set. 
+
 
 ## Features
 
