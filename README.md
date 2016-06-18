@@ -13,9 +13,13 @@ Visual Studio 2015 extension that enables developers to rapidly generate data en
 
 See the [changelog](CHANGELOG.md) for changes and roadmap.
 
+## Pull Requests
+
+Unfortunately, at this time, I don't have the cycles to work with Pull Requests.  If you require feature or run into an issue, please post an issue and I'll respond.  Thank you for your understanding.
+
 ## Training Videos
 
-To get the most our of XAML Power Toys and to create complex forms like the ones pictured below ***PLEASE*** take a few minutes and watch the training vidoes.
+To get the most our of XAML Power Toys, and to create complex forms like the ones pictured below ***PLEASE*** take a few minutes and watch the training vidoes.
 
 **Training Videos** on my blog [here](https://oceanware.wordpress.com/xaml-power-toys/)
 
