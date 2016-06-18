@@ -1,0 +1,61 @@
+﻿<UserControl x:Class="XamlPowerToys.UI.DynamicForm.StandardEditorHeader"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:converters="clr-namespace:XamlPowerToys.UI.Converters" >
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="booleanToVisibilityConverter" />
+        <converters:NotBooleanToVisibilityConverter x:Key="notBooleanToVisibilityConverter" />
+        
+        <Style TargetType="{x:Type ComboBox}">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="ItemContainerStyle">
+                <Setter.Value>
+                    <Style TargetType="ComboBoxItem">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=ShortName}" Value="Button">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>    
+    <Grid Margin="3">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Visibility="{Binding Path=IsNonBindingControl, Converter={StaticResource notBooleanToVisibilityConverter}}" Orientation="Horizontal">
+            <TextBlock Text="Path" />
+            <TextBlock Text="{Binding Path=BindingPath}" FontWeight="Bold" Margin="10,0" MaxWidth="200" TextTrimming="CharacterEllipsis">
+                <TextBlock.ToolTip>
+                    <ToolTip Content="{Binding Path=NamespaceTypeName}" />
+                </TextBlock.ToolTip>
+            </TextBlock>
+            <TextBlock Text="{Binding Path=TypeName}" TextTrimming="CharacterEllipsis">
+                <TextBlock.ToolTip>
+                    <ToolTip Content="{Binding Path=NamespaceTypeName}" />
+                </TextBlock.ToolTip>
+            </TextBlock>
+            <TextBlock x:Name="tbEditorTargetProperty" FontStyle="Italic" Margin="10,0,0,0" />
+            <TextBlock Visibility="{Binding Path=IsReadOnly, Converter={StaticResource booleanToVisibilityConverter}}" FontStyle="Italic" Margin="10,0,0,0" Text="(Property is Read-Only)" />
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Visibility="{Binding Path=IsNonBindingControl, Converter={StaticResource booleanToVisibilityConverter}}">
+            <TextBlock Text="Unbound "/>    
+            <TextBlock Text="{Binding Path=ControlDefinition.ShortName}" FontWeight="Bold" />    
+            <TextBlock Text=" Control"/>    
+        </StackPanel>
+        
+        <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+            <TextBlock Text="Control" Margin="10,0,10,0" HorizontalAlignment="Right" />
+
+            <ComboBox Width="100" 
+                      IsEnabled="{Binding Path=IsControlSelectionEnabled}"
+                      ItemsSource="{Binding Path=ControlDefinitions}"
+                      SelectedItem="{Binding Path=ControlDefinition, Mode=TwoWay}"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

@@ -1,0 +1,370 @@
+﻿<UserControl 
+    x:Class="XamlPowerToys.UI.DynamicForm.CreateFormView" 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+    xmlns:dragDrop="clr-namespace:XamlPowerToys.UI.DragDrop" 
+    xmlns:converters="clr-namespace:XamlPowerToys.UI.Converters" 
+    xmlns:dynamicForm="clr-namespace:XamlPowerToys.UI.DynamicForm" 
+    xmlns:xptModel="clr-namespace:XamlPowerToys.Model;assembly=XamlPowerToys.Model"
+    Loaded="CreateFormView_OnLoaded" 
+    TextOptions.TextFormattingMode="Display"
+    UseLayoutRounding="True"
+    SnapsToDevicePixels="True"
+    FontSize="12">
+    <UserControl.Resources>
+
+        <BooleanToVisibilityConverter x:Key="booleanToVisibilityConverter" />
+        <converters:BooleanToBoldFontWeightConverter x:Key="booleanToBoldFontWeightConverter" />
+        <converters:LabelPositionEnumConverter x:Key="labelPositionEnumConverter" />
+        <converters:EnumToBooleanConverter x:Key="enumToBooleanConverter" />
+
+        <!--DO NOT REMOVE - This data template selector is accessed in code only -->
+        <!-- ReSharper disable once Xaml.RedundantResource -->
+        <dynamicForm:EditorDataTemplateSelector x:Key="editorDataTemplateSelector" />
+
+        <Style TargetType="{x:Type TextBlock}">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
+        <Style TargetType="{x:Type Label}">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
+        <Style TargetType="{x:Type RadioButton}">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
+        <Style TargetType="{x:Type CheckBox}">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
+        <Style TargetType="{x:Type ComboBox}">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
+        <Style TargetType="{x:Type TextBox}">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Validation.ErrorTemplate">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <DockPanel LastChildFill="True">
+                            <TextBlock FontWeight="Bold" Margin="3,0,0,0" DockPanel.Dock="Right" Foreground="Red" FontSize="12pt" Text="!" />
+                            <Border BorderBrush="Red" BorderThickness="1">
+                                <AdornedElementPlaceholder />
+                            </Border>
+                        </DockPanel>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="true">
+                    <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <DataTemplate x:Key="fieldsListDragDropDataTemplate">
+            <StackPanel Background="LightYellow">
+                <TextBlock FontSize="16" Text="{Binding Path=NameAndWritable}" TextAlignment="Center" FontWeight="Bold" />
+            </StackPanel>
+        </DataTemplate>
+
+        <Style x:Key="gridSplitterPreviewStyle">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Rectangle Fill="#80000000" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="{x:Type GridSplitter}">
+            <Setter Property="PreviewStyle" Value="{StaticResource gridSplitterPreviewStyle}" />
+            <Setter Property="Cursor" Value="SizeWE" />
+            <Setter Property="Focusable" Value="False" />
+            <Setter Property="ShowsPreview" Value="True" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Stretch" />
+            <Setter Property="Width" Value="4" />
+            <Setter Property="Height" Value="Auto" />
+            <Setter Property="Padding" Value="2" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type GridSplitter}">
+                        <Border Background="#FFC5C5C5" BorderBrush="{x:Null}" BorderThickness="0">
+                            <Rectangle Height="25" Stroke="#FFFFFFFF" StrokeThickness="0" x:Name="rectangle">
+                                <Rectangle.Fill>
+                                    <DrawingBrush TileMode="Tile" Viewbox="0,0,4,4" ViewboxUnits="Absolute" Viewport="0,0,4,4" ViewportUnits="Absolute">
+                                        <DrawingBrush.Drawing>
+                                            <DrawingGroup>
+                                                <GeometryDrawing Brush="{Binding Path=Stroke, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Rectangle}}}" Geometry="M 1 1 L 1 3 L 3 3 L 3 1 z" />
+                                                <GeometryDrawing Brush="#C6C3C6" Geometry="M 0 0 L 0 2 L 2 2 L 2 0 z" />
+                                            </DrawingGroup>
+                                        </DrawingBrush.Drawing>
+                                    </DrawingBrush>
+                                </Rectangle.Fill>
+                            </Rectangle>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Stroke" TargetName="rectangle" Value="#FF515151" />
+                                <Setter Property="StrokeThickness" TargetName="rectangle" Value="0" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="FocusVisual">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Rectangle Margin="2" SnapsToDevicePixels="true" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <SolidColorBrush x:Key="Item.MouseOver.Background" Color="#50F7FDFF" />
+        <SolidColorBrush x:Key="Item.MouseOver.Border" Color="#a826A0Da" />
+        <!--<SolidColorBrush x:Key="Item.SelectedInactive.Background" Color="Transparent"/>
+        <SolidColorBrush x:Key="Item.SelectedInactive.Border" Color="Transparent"/>
+        <SolidColorBrush x:Key="Item.SelectedActive.Background" Color="Transparent"/>
+        <SolidColorBrush x:Key="Item.SelectedActive.Border" Color="Transparent"/>-->
+        <Style TargetType="{x:Type ListBoxItem}">
+            <Setter Property="IsTabStop" Value="False" />
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="Padding" Value="4,1" />
+            <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}" />
+            <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                        <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsMouseOver" Value="True" />
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Background" TargetName="Bd" Value="{StaticResource Item.MouseOver.Background}" />
+                                <Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource Item.MouseOver.Border}" />
+                            </MultiTrigger>
+                            <!--<MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="Selector.IsSelectionActive" Value="False"/>
+                                    <Condition Property="IsSelected" Value="True"/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Background" TargetName="Bd" Value="{StaticResource Item.SelectedInactive.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource Item.SelectedInactive.Border}"/>
+                            </MultiTrigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="Selector.IsSelectionActive" Value="True"/>
+                                    <Condition Property="IsSelected" Value="True"/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Background" TargetName="Bd" Value="{StaticResource Item.SelectedActive.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource Item.SelectedActive.Border}"/>
+                            </MultiTrigger>-->
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="TextElement.Foreground" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="350" MinWidth="200" />
+            <ColumnDefinition Width="8" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.ColumnSpan="3" BorderBrush="LightGray" BorderThickness="0,0,0,1" Padding="5">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Stretch">
+                    <Image Source="{Binding Path=FormIconImageSource}" Stretch="Uniform" Height="40" HorizontalAlignment="Left" />
+                    <TextBlock Margin="10,0,5,0" Text="Select Object To Create" />
+                    <ComboBox SelectedIndex="0" Width="115" Margin="0,0,20,0" SelectedItem="{Binding Path=SelectedCreateObjectDefinition, Mode=TwoWay}" ItemsSource="{Binding Path=CreateObjectDefinitions}" />
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                    <TextBlock Text="UI Scale Factor" VerticalAlignment="Center"/>
+                    <TextBlock Margin="5,0" Text="{Binding Path=UIScaleFactor, StringFormat={}{0:F2}}" VerticalAlignment="Center"/>
+                    <Button Command="{Binding Path=DecreaseScaleFactorCommand}" Margin="7,0" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Image Source="../Images/minus-128.png" Height="16" Width="16" Stretch="Uniform"/>
+                    </Button>
+                    <Button Command="{Binding Path=IncreaseScaleFactorCommand}" Margin="7,0" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Image Source="../Images/add-128.png" Height="16" Width="16" Stretch="Uniform"/>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </Border>
+        <StackPanel Orientation="Horizontal" Grid.Row="1" VerticalAlignment="Center">
+            <TextBlock FontWeight="Bold" Margin="5,0,5,0" Text="{Binding Path=ClassName}" />
+            <TextBlock Text="Class Properties" />
+        </StackPanel>
+        <Button Command="{Binding Path=DrillBackCommand}" Visibility="{Binding Path=ChildClassEntityInView, Converter={StaticResource booleanToVisibilityConverter}}" Margin="0,0,5,0" Grid.Row="1" HorizontalAlignment="Right" >
+            <Button.Template>
+                <ControlTemplate>
+                    <Image Cursor="Hand" Height="24" Width="24" Source="../Images/backIcon.png" ToolTip="Back to parent."></Image>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="80" />
+            </Grid.RowDefinitions>
+            <ListBox x:Name="lbPropertyInformationCollection" BorderThickness="1" BorderBrush="LightGray" Padding="3" Margin="3" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Path=PropertyInformationCollection}" IsTabStop="False" dragDrop:DragDropHelper.IsDragSource="True" dragDrop:DragDropHelper.IsDropTarget="True" dragDrop:DragDropHelper.IsMasterListControl="True" dragDrop:DragDropHelper.DragDropTemplate="{StaticResource fieldsListDragDropDataTemplate}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="{Binding Path=NameAndWritable}" HorizontalAlignment="Left" Margin="0,0,10,0" TextWrapping="NoWrap">
+                                <TextBlock.ToolTip>
+                                    <ToolTip Content="{Binding Path=NamespaceTypeName}" />
+                                </TextBlock.ToolTip>
+                            </TextBlock>
+                            <TextBlock FontWeight="{Binding Path=IsDrillableProperty, Converter={StaticResource booleanToBoldFontWeightConverter}}" Grid.Column="1" Text="{Binding Path=TypeName}" TextAlignment="Right" HorizontalAlignment="Right" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis">
+                                <TextBlock.ToolTip>
+                                    <ToolTip Content="{Binding Path=NamespaceTypeName}" />
+                                </TextBlock.ToolTip>
+                                <TextBlock.InputBindings>
+                                    <MouseBinding Gesture="LeftDoubleClick" Command="{Binding Path=DataContext.DrillIntoCommand, ElementName=lbPropertyInformationCollection}" CommandParameter="{Binding}" />
+                                </TextBlock.InputBindings>
+                            </TextBlock>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <TextBlock Grid.Row="1" FontWeight="Bold" Margin="5, 15,5,10" Text="Unbound Controls"/>
+
+            <ListBox Grid.Row="2" ItemsSource="{Binding Path=NonBindingControlsCollection}" BorderThickness="1" BorderBrush="LightGray" Padding="3" Margin="3" HorizontalContentAlignment="Stretch" IsTabStop="False" dragDrop:DragDropHelper.IsDragSource="True" dragDrop:DragDropHelper.IsDropTarget="True" dragDrop:DragDropHelper.IsNonBindingControlsListControl="True" dragDrop:DragDropHelper.DragDropTemplate="{StaticResource fieldsListDragDropDataTemplate}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <TextBlock Text="{Binding Path=ControlDefinition.ShortName}" HorizontalAlignment="Left" ToolTip="Drag control to design surface add this control as a non-binding control."/>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
+
+        <GridSplitter Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" />
+
+        <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Horizontal" Margin="5,0" VerticalAlignment="Center">
+            <StackPanel Margin="10" Orientation="Horizontal">
+                <TextBlock Text="Label Position" />
+                <ComboBox IsEnabled="{Binding Path=GenerateFormModel.IsLabelPositionEnabled, Mode=OneWay}" Margin="5,0,0,0" ItemsSource="{Binding Path=GenerateFormModel.LabelPositions}" SelectedValue="{Binding Path=GenerateFormModel.LabelPosition, Mode=TwoWay, Converter={StaticResource labelPositionEnumConverter}}" />
+            </StackPanel>
+
+            <CheckBox Margin="20,0,0,0" IsChecked="{Binding Path=ShowExpandedView, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Content="Show Expanded View" />
+
+            <CheckBox Margin="20,0,0,0" IsChecked="{Binding Path=ShowExpandAdvancedOptions, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Content="Show Advanced Options" />
+
+            <Label Margin="20,0,5,0" HorizontalAlignment="Left" Content="Column Groups" Visibility="{Binding Path=ShowColumnGroupControls, Converter={StaticResource booleanToVisibilityConverter}}" />
+
+            <TextBox x:Name="txtColumnCount" Text="{Binding Path=NumberOfColumns, Mode=TwoWay}" KeyDown="TxtColumnCount_OnKeyDown" MaxLength="1" Margin="0,5,10,0" Width="35"  Visibility="{Binding Path=ShowColumnGroupControls, Converter={StaticResource booleanToVisibilityConverter}}" />
+
+            <StackPanel Visibility="{Binding Path=GenerateFormModel.UiIsXamarinForms, Converter={StaticResource booleanToVisibilityConverter}}" Margin="20,0,0,0" Orientation="Horizontal" VerticalAlignment="Center">
+                <TextBlock Text="Column Root Object" />
+                <RadioButton GroupName="columnRoot" Margin="10,0,0,0" Content="Grid" IsChecked="{Binding Path=GenerateFormModel.ColumnRootObject, Mode=TwoWay, Converter={StaticResource enumToBooleanConverter}, ConverterParameter={x:Static xptModel:RootObject.Grid}}" />
+                <RadioButton GroupName="columnRoot" Margin="10,0,0,0" Content="Stack Layout" IsChecked="{Binding Path=GenerateFormModel.ColumnRootObject, Mode=TwoWay, Converter={StaticResource enumToBooleanConverter}, ConverterParameter={x:Static xptModel:RootObject.StackLayout}}"  />
+                <RadioButton GroupName="columnRoot" Margin="10,0,0,0" Content="Table View" IsChecked="{Binding Path=GenerateFormModel.ColumnRootObject, Mode=TwoWay, Converter={StaticResource enumToBooleanConverter}, ConverterParameter={x:Static xptModel:RootObject.TableView}}" Visibility="{Binding Path=IsXamarinFormsProject, Converter={StaticResource booleanToVisibilityConverter}}" />
+            </StackPanel>
+        </StackPanel>
+
+        <Grid x:Name="gridColumnGroupsContainer" Grid.Row="2" Grid.Column="2">
+            <Grid.Resources>
+                <ResourceDictionary>
+                    <ResourceDictionary.MergedDictionaries>
+                        <ResourceDictionary Source="XamarinForms/XamarinEditorsDictionary.xaml" />
+                        <ResourceDictionary Source="Wpf/WpfEditorsDictionary.xaml" />
+                    </ResourceDictionary.MergedDictionaries>
+                </ResourceDictionary>
+            </Grid.Resources>
+        </Grid>
+
+        <StackPanel Orientation="Horizontal" Margin="0,10" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center">
+            <Button Command="{Binding Path=NextCommand}" HorizontalAlignment="Right" Margin="0,0,10,0" VerticalAlignment="Center" Padding="6">
+                <AccessText>_Next</AccessText>
+            </Button>
+            <Button x:Name="btnCancel" Click="BtnCancel_OnClick" HorizontalAlignment="Right" Margin="0,0,10,0" VerticalAlignment="Center" Padding="6">
+                <AccessText>_Cancel</AccessText>
+            </Button>
+        </StackPanel>
+
+        <Grid Visibility="{Binding Path=ShowGenerateForm, Converter={StaticResource booleanToVisibilityConverter}}" Grid.Row="1" Grid.RowSpan="3" Grid.Column="2" Background="White">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <TextBlock Margin="10" FontWeight="Bold" FontSize="18" Text="XAML UI Generation Options" />
+
+            <StackPanel Visibility="{Binding Path=GenerateFormModel.UiIsXamarinForms, Converter={StaticResource booleanToVisibilityConverter}}" Orientation="Horizontal" Grid.Row="1" Margin="10">
+                <TextBlock Text="Generated Root Object" />
+                <RadioButton IsEnabled="{Binding Path=RootObjectSelectionIsEnabled}" GroupName="formRoot" Margin="10,3,0,0" Content="None" IsChecked="{Binding Path=GenerateFormModel.RootObject, Mode=TwoWay, Converter={StaticResource enumToBooleanConverter}, ConverterParameter={x:Static xptModel:RootObject.None}}" />
+                <RadioButton IsEnabled="{Binding Path=RootObjectSelectionIsEnabled}" GroupName="formRoot" Margin="10,3,0,0" Content="Grid" IsChecked="{Binding Path=GenerateFormModel.RootObject, Mode=TwoWay, Converter={StaticResource enumToBooleanConverter}, ConverterParameter={x:Static xptModel:RootObject.Grid}}" />
+                <RadioButton IsEnabled="{Binding Path=RootObjectSelectionIsEnabled}" GroupName="formRoot" Margin="10,3,0,0" Content="Scroll Viewer" IsChecked="{Binding Path=GenerateFormModel.RootObject, Mode=TwoWay, Converter={StaticResource enumToBooleanConverter}, ConverterParameter={x:Static xptModel:RootObject.ScrollView}}" />
+                <RadioButton IsEnabled="{Binding Path=RootObjectSelectionIsEnabled}" GroupName="formRoot" Margin="10,3,0,0" Content="Stack Layout" IsChecked="{Binding Path=GenerateFormModel.RootObject, Mode=TwoWay, Converter={StaticResource enumToBooleanConverter}, ConverterParameter={x:Static xptModel:RootObject.StackLayout}}" />
+            </StackPanel>
+
+            <CheckBox IsEnabled="{Binding Path=GenerateFormModel.IsWrapGeneratedCodeInBorderEnabled, Mode=TwoWay}" Margin="10" Grid.Row="2" Content="Wrap Generated Code In Border" IsChecked="{Binding Path=GenerateFormModel.WrapGeneratedCodeInBorder, Mode=TwoWay}" />
+
+            <CheckBox Margin="10" Grid.Row="3" Content="Add Name To Generated UI Controls" IsChecked="{Binding Path=GenerateFormModel.AddNameToUIControls, Mode=TwoWay}" />
+
+            <StackPanel Margin="10" Grid.Row="5" Orientation="Horizontal">
+                <TextBlock Text="Form Header" />
+                <TextBox Margin="5,0,0,0" Text="{Binding Path=GenerateFormModel.FormHeader, Mode=TwoWay}" Width="200" MaxLength="100" />
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="10" Grid.Row="7" HorizontalAlignment="Right" VerticalAlignment="Center">
+                <Button x:Name="btnGenerateUI" Click="BtnGenerateUI_OnClick" HorizontalAlignment="Right" Margin="0,0,10,0" VerticalAlignment="Center" Padding="6">
+                    <AccessText>_Generate UI</AccessText>
+                </Button>
+                <Button Command="{Binding Path=BackCommand}" HorizontalAlignment="Right" Margin="0,0,10,0" VerticalAlignment="Center" Padding="6">
+                    <AccessText>_Back</AccessText>
+                </Button>
+            </StackPanel>
+        </Grid>
+
+        <Grid Cursor="Wait" Visibility="{Binding Path=IsUIGenerationInProgress, Converter={StaticResource booleanToVisibilityConverter}}" Grid.Row="0" Grid.RowSpan="4" Grid.Column="0" Grid.ColumnSpan="3">
+            <Rectangle Fill="Gray" Opacity=".50" IsHitTestVisible="True" />
+            <TextBlock FontSize="48" Text="Generating UI..." HorizontalAlignment="Center" />
+        </Grid>
+    </Grid>
+</UserControl>
