@@ -1,11 +1,5 @@
 # XAML Power Toys for Visual Studio 2015
 
-<!-- Replace this badge with your own-->
-[![Build status](https://ci.appveyor.com/api/projects/status/hv6uyc059rqbc6fj?svg=true)](https://ci.appveyor.com/project/madskristensen/extensibilitytools)
-
-<!-- Update the VS Gallery link after you upload the VSIX-->
-Download this extension from the [VS Gallery](https://visualstudiogallery.msdn.microsoft.com/[GuidFromGallery])
-or get the [CI build](http://vsixgallery.com/extension/d01c1624-8838-4097-bf77-f52d73fc7a1f/).
 
 ---------------------------------------
 
