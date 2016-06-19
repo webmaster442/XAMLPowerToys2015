@@ -37,7 +37,7 @@ The XAML that the tool generates, is similar to clean hand-coded XAML. Clean XAM
 
 **NOTE:** the below images and property names in this documentation, were taken from a Xamarin Forms application.  When using the tool for WPF, some options will not be displayed or different ones will be displayed.
 
-Creating a data bound, data entry form with XAML Power Toys is very simple. You'll use drag and drop to specifiy the desired data form controls on a friendly layout surface.
+Creating a data bound, data entry form with XAML Power Toys is very simple. You'll use drag and drop to specify the desired data form controls on a friendly layout surface.
 
 The end result will be a data entry form that renders well across platforms, with all data bindings, format strings, etc. set the way you would had you hand coded the form.
 
@@ -54,7 +54,7 @@ The end result will be a data entry form that renders well across platforms, wit
 #### Start XAML Power Toys
 From a XAML file in a Xamarin Forms or WPF project, right click in the editor where you want your form to be inserted.
 
-**NOTE:** You must **build** your solution if you've mades changes to any view model or entity class **BEFORE** opening XAML Power Toys. This tool uses reflection to load up your solution's view models and entity classes.
+**NOTE:** You must **build** your solution if you've made changes to any view model or entity class **BEFORE** opening XAML Power Toys. This tool uses reflection to load up your solution's view models and entity classes.
 
 ![Context Menu](Art/context-menu.png)
 
@@ -78,7 +78,7 @@ After clicking the Next... button the XAML Power Toys Form Layout Tool dialog wi
 **Description**
 
 * On the left:
-  * The icon at the top indicates the platform this form is targetting.  In this case, Xamarin Forms.
+  * The icon at the top indicates the platform this form is targeting.  In this case, Xamarin Forms.
   * The selected type name is displayed.  In this example **PersonEditorViewModel**.
   * Each of the selected type properties are displayed in the list box.
   * The (r) indicates a read-only property.
@@ -102,7 +102,7 @@ After clicking the Next... button the XAML Power Toys Form Layout Tool dialog wi
   * The Path for the Entry control Text property is set to Person.FirstName.
   * The Control Label and Placeholder text have been defaulted by splitting the property name at each capital letter.
   * The Control has been defaulted based on the property data type.  You can change it if required for your application.
-  * The Keyboard as been defaulted bassed on the property data type.  You can changed it if required for your application.
+  * The Keyboard as been defaulted based on the property data type.  You can changed it if required for your application.
 * You can reorder the controls by dragging them up or down in the layout surface.
 * You can remove a control by dragging it back to the properties listing it was dragged from.
 
@@ -117,11 +117,11 @@ You can optionally wrap the form in a top level control.  For example, a scroll 
 
 You can optionally add names to all your controls.
 
-You can optinally add a form header to the generated UI.
+You can optionally add a form header to the generated UI.
 
 ![Generate Ui](Art/generate-ui.png)
 
-Click the Generate UI button and the folowing form will be inserted into your XAML file where you opened the context menu.
+Click the Generate UI button and the following form will be inserted into your XAML file where you opened the context menu.
 
 ![Generated Xaml](Art/generated-xaml.png)
 
@@ -130,7 +130,7 @@ If run the Xamarin Forms UWP application, the UI looks like this:
 ![Uwp Runtime](Art/uwp-runtime.png)
 
 ## Example Forms Created With XAML Power Toys
-With a little stying, these forms would look great and took less than a minute to create each one.
+With a little styling, these forms would look great and took less than a minute to create each one.
 
 | IOS TableView Form  | Country BindablePicker  |
 |---|---|
@@ -180,7 +180,7 @@ You can see two of the supported scenarios:
 * States is bound to a list of Strings
 * Countries is bound to a list of Country objects. Notice for Country, the DisplayMemberPath and SelectedValuePath are both set.
 
-The States and Countries collections are exposed on the view model, making the task of setting up data bindings trival.
+The States and Countries collections are exposed on the view model, making the task of setting up data bindings trivial.
 
 ![City State Zip Country](Art/city-state-zip-country.png)
 
