@@ -10,6 +10,12 @@ download in the
 
 These are the changes to each version that has been released on the official Visual Studio extension gallery.
 
+## 1.0.5
+
+**2016-06-19**
+
+- [x] Changed Silder control XAML Serialization to account for a bug in Xamarin Forms, you must have the Maximum value before Minimum value in your XAML.
+
 ## 1.0
 
 **2016-06-18**
