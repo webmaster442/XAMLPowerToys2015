@@ -307,6 +307,7 @@
                     <ResourceDictionary.MergedDictionaries>
                         <ResourceDictionary Source="XamarinForms/XamarinEditorsDictionary.xaml" />
                         <ResourceDictionary Source="Wpf/WpfEditorsDictionary.xaml" />
+                        <ResourceDictionary Source="Uwp/UwpEditorsDictionary.xaml" />
                     </ResourceDictionary.MergedDictionaries>
                 </ResourceDictionary>
             </Grid.Resources>
@@ -362,7 +363,7 @@
             </StackPanel>
         </Grid>
 
-        <Grid Cursor="Wait" Visibility="{Binding Path=IsUIGenerationInProgress, Converter={StaticResource booleanToVisibilityConverter}}" Grid.Row="0" Grid.RowSpan="4" Grid.Column="0" Grid.ColumnSpan="3">
+        <Grid Cursor="Wait" Visibility="{Binding Path=IsUIGenerationInProgress, Converter={StaticResource booleanToVisibilityConverter}, FallbackValue=False}" Grid.Row="0" Grid.RowSpan="4" Grid.Column="0" Grid.ColumnSpan="3">
             <Rectangle Fill="Gray" Opacity=".50" IsHitTestVisible="True" />
             <TextBlock FontSize="48" Text="Generating UI..." HorizontalAlignment="Center" />
         </Grid>

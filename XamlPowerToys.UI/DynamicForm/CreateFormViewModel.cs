@@ -177,6 +177,10 @@
             }
         }
 
+        public IEnumerable<String> UwpTickPlacements { get; }
+
+        public IEnumerable<String> WpfTickPlacements { get; }
+
         public CreateFormViewModel(ClassEntity classEntity, IEnumerable<String> availableConverters) {
             if (classEntity == null) {
                 throw new ArgumentNullException(nameof(classEntity));
@@ -212,6 +216,8 @@
             this.AvailableConverters = availableConverters;
             this.GenerateFormModel = new GenerateFormModel(classEntity.ProjectType);
             this.NonBindingControlsCollection = GetNonBindingControlsCollection();
+            this.UwpTickPlacements = GetUwpTickPlacements();
+            this.WpfTickPlacements = GetWpfTickPlacements();
         }
 
         public void GenerateUI(IList<PropertyInformationViewModel> columnZeroItems, IList<PropertyInformationViewModel> columnOneItems = null, IList<PropertyInformationViewModel> columnTwoItems = null) {
@@ -366,6 +372,22 @@
                         list.Add(viewModel);
                     }
                 }
+            }
+            return list;
+        }
+
+        IEnumerable<String> GetUwpTickPlacements() {
+            var list = new List<String>();
+            foreach (var name in Enum.GetNames(typeof(UwpTickPlacement))) {
+                list.Add(name);
+            }
+            return list;
+        }
+
+        IEnumerable<String> GetWpfTickPlacements() {
+            var list = new List<String>();
+            foreach (var name in Enum.GetNames(typeof(WpfTickPlacement))) {
+                list.Add(name);
             }
             return list;
         }

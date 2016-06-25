@@ -1,9 +1,9 @@
-﻿namespace XamlPowerToys.Model.CodeGeneration.Wpf.Controls {
+﻿namespace XamlPowerToys.Model.CodeGeneration.Uwp.Controls {
     using System;
     using System.Text;
     using XamlPowerToys.Model.CodeGeneration.Infrastructure;
     using XamlPowerToys.Model.Infrastructure;
-    using XamlPowerToys.Model.Wpf;
+    using XamlPowerToys.Model.Uwp;
 
     public class CheckBoxFactory : IControlFactory {
 
@@ -28,7 +28,7 @@
             if (!String.IsNullOrWhiteSpace(_model.EditorProperties.Content)) {
                 sb.Append($"Content=\"{_model.EditorProperties.Content }\" ");
             }
-            
+
             if (parentGridColumn != null) {
                 sb.Append($"Grid.Column=\"{parentGridColumn.Value}\" ");
             }

@@ -7,6 +7,7 @@
     using XamlPowerToys.Model.Infrastructure;
     using XF = XamlPowerToys.Model.XamarinForms;
     using WF = XamlPowerToys.Model.Wpf;
+    using UW = XamlPowerToys.Model.Uwp;
 
     [Serializable]
     public class PropertyInformationViewModel : ObservableObject, IComparable<PropertyInformationViewModel>, IEquatable<PropertyInformationViewModel> {
@@ -45,7 +46,7 @@
             }
         }
 
-        public IEnumerable<String> BindingModes { get; }
+        public IEnumerable<String> BindingModes { get; private set; }
 
         public String BindingPath { get; }
 
@@ -263,12 +264,31 @@
             }
 
             this.ControlDefinitions = GetControlControlDefinitions();
-            if (!this.IsNonBindingControl) {
-                this.BindingModes = Enum.GetNames(typeof(BindingMode));
-            }
-
+            SetBindingModes();
             this.Keyboards = new List<String> {"Default", "Chat", "Email", "Numeric", "Telephone", "Text", "Url"};
             SetDefaultControlDefinition();
+        }
+
+        void SetBindingModes() {
+            if (!this.IsNonBindingControl) {
+                var list = new List<String>();
+                foreach (var item in Enum.GetNames(typeof(BindingMode))) {
+                    if (_projectType == ProjectType.Uwp) {
+                        if (item == "Default" || item == "OneWayToSource") {
+                            continue;
+                        }
+
+                    } else if (_projectType == ProjectType.Xamarin) {
+                        if (item == "OneTime") {
+                            continue;
+                        }
+
+                    }
+                    list.Add(item);
+                }
+                this.BindingModes = list;
+            }
+
         }
 
         public Int32 CompareTo(PropertyInformationViewModel other) {
@@ -339,9 +359,85 @@
         }
 
         void SetUwpControlSpecificPropertiesObject() {
+            this.ShowStringFormatProperty = false;
+            switch (this.ControlDefinition.ControlType) {
+                case ControlType.UwpButton:
+                    this.ControlSpecificProperties = new UW.ButtonEditorProperties();
+                    this.BindingMode = BindingMode.OneWay;
+                    break;
+                case ControlType.UwpCheckBox:
+                    this.ControlSpecificProperties = new UW.CheckBoxEditorProperties();
+                    this.BindingMode = BindingMode.TwoWay;
+                    break;
+                case ControlType.UwpComboBox:
+                    this.ControlSpecificProperties = new UW.ComboBoxEditorProperties();
+                    this.BindingMode = BindingMode.TwoWay;
+                    break;
+                case ControlType.UwpDatePicker:
+                    this.ControlSpecificProperties = new UW.DatePickerEditorProperties();
+                    this.BindingMode = BindingMode.TwoWay;
+                    break;
+                case ControlType.UwpImage:
+                    this.ControlSpecificProperties = new UW.ImageEditorProperties();
+                    this.BindingMode = BindingMode.OneWay;
+                    break;
+                case ControlType.UwpSlider:
+                    this.ControlSpecificProperties = new UW.SliderEditorProperties();
+                    this.BindingMode = BindingMode.TwoWay;
+                    break;
+                case ControlType.UwpTextBlock:
+                    this.ShowStringFormatProperty = true;
+                    this.ControlSpecificProperties = new UW.TextBlockEditorProperties();
+                    this.BindingMode = BindingMode.OneWay;
+                    break;
+                case ControlType.UwpTextBox:
+                    this.ShowStringFormatProperty = true;
+                    this.ControlSpecificProperties = new UW.TextBoxEditorProperties();
+                    this.BindingMode = BindingMode.TwoWay;
+                    break;
+                case ControlType.UwpToggleButton:
+                    this.ControlSpecificProperties = new UW.ToggleButtonEditorProperties();
+                    this.BindingMode = BindingMode.TwoWay;
+                    break;
+            }
         }
 
         void SetUwpDefaultControlDefinition() {
+            this.BindingMode = BindingMode.OneWay;
+
+            if (this.IsNonBindingControl) {
+                this.LabelText = "";
+                return;
+            }
+
+            if (!CanWrite && this.TypeName != "ICommand") {
+                this.ControlDefinition = this.ControlDefinitions.First(x => x.ControlType == ControlType.UwpTextBlock);
+                this.BindingMode = BindingMode.OneWay;
+                return;
+            }
+
+            switch (this.TypeName) {
+                case "DateTimeOffset":
+                case "DateTime":
+                    this.ControlDefinition = this.ControlDefinitions.First(x => x.ControlType == ControlType.UwpDatePicker);
+                    this.BindingMode = BindingMode.TwoWay;
+                    break;
+                case "Boolean":
+                    this.ControlDefinition = this.ControlDefinitions.First(x => x.ControlType == ControlType.UwpCheckBox);
+                    this.BindingMode = BindingMode.TwoWay;
+                    break;
+                case "ICommand":
+                    this.ControlDefinition = this.ControlDefinitions.First(x => x.ControlType == ControlType.UwpButton);
+                    var buttonEditorProperties = (UW.ButtonEditorProperties)this.ControlSpecificProperties;
+                    buttonEditorProperties.Command = this.BindingPath;
+                    buttonEditorProperties.Content = this.BindingPath.Replace("Command", String.Empty);
+                    this.BindingMode = BindingMode.OneWay;
+                    break;
+                default:
+                    this.ControlDefinition = this.ControlDefinitions.First(x => x.ControlType == ControlType.UwpTextBox);
+                    this.BindingMode = BindingMode.TwoWay;
+                    break;
+            }
         }
 
         void SetWpfControlSpecificPropertiesObject() {

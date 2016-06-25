@@ -1,34 +1,30 @@
-﻿namespace XamlPowerToys.Model.CodeGeneration.Wpf.Controls {
+﻿namespace XamlPowerToys.Model.CodeGeneration.Uwp.Controls {
     using System;
     using System.Text;
     using XamlPowerToys.Model.CodeGeneration.Infrastructure;
     using XamlPowerToys.Model.Infrastructure;
-    using XamlPowerToys.Model.Wpf;
+    using XamlPowerToys.Model.Uwp;
 
-    public class CheckBoxFactory : IControlFactory {
+    public class TextBoxFactory : IControlFactory {
 
-        readonly ControlTemplateModel<CheckBoxEditorProperties> _model;
+        readonly ControlTemplateModel<TextBoxEditorProperties> _model;
 
-        public CheckBoxFactory(GenerateFormModel generateFormModel, PropertyInformationViewModel propertyInformationViewModel) {
+        public TextBoxFactory(GenerateFormModel generateFormModel, PropertyInformationViewModel propertyInformationViewModel) {
             if (generateFormModel == null) {
                 throw new ArgumentNullException(nameof(generateFormModel));
             }
             if (propertyInformationViewModel == null) {
                 throw new ArgumentNullException(nameof(propertyInformationViewModel));
             }
-            _model = new ControlTemplateModel<CheckBoxEditorProperties>(generateFormModel, propertyInformationViewModel);
+            _model = new ControlTemplateModel<TextBoxEditorProperties>(generateFormModel, propertyInformationViewModel);
         }
 
         public String MakeControl(Int32? parentGridColumn = null, Int32? parentGridRow = null) {
-            var sb = new StringBuilder("<CheckBox ");
+            var sb = new StringBuilder("<TextBox ");
             if (!String.IsNullOrWhiteSpace(_model.BindingPath)) {
-                sb.AppendFormat("IsChecked=\"{0}\" ", Helpers.ConstructBinding(_model.BindingPath, _model.BindingMode, _model.StringFormatText, _model.BindingConverter));
+                sb.AppendFormat("Text=\"{0}\" ", Helpers.ConstructBinding(_model.BindingPath, _model.BindingMode, _model.StringFormatText, _model.BindingConverter));
             }
 
-            if (!String.IsNullOrWhiteSpace(_model.EditorProperties.Content)) {
-                sb.Append($"Content=\"{_model.EditorProperties.Content }\" ");
-            }
-            
             if (parentGridColumn != null) {
                 sb.Append($"Grid.Column=\"{parentGridColumn.Value}\" ");
             }

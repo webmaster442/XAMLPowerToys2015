@@ -7,7 +7,7 @@ or get the [CI build](http://vsixgallery.com/extension/d01c1624-8838-4097-bf77-f
 
 ---------------------------------------
 
-Visual Studio 2015 extension that enables developers to rapidly generate data entry forms from view models or entity objects for Xamarin Forms or WPF.
+Visual Studio 2015 extension that enables developers to rapidly generate data entry forms from view models or entity objects for Xamarin Forms, UWP, and WPF.
 
 See the [changelog](CHANGELOG.md) for changes and roadmap.
 
@@ -30,7 +30,6 @@ This tool is designed to enable the developer to rapidly create cross-platform d
 While adopting the MVVM pattern is not a requirement to create forms with the tool, it is designed to fully support creating forms with a view model as the BindingContext or DataContext. Using the MVVM pattern has long been a best practice for developing XAML applications, this tool's happy path is form development against view models.
 
 The XAML that the tool generates, is similar to clean hand-coded XAML. Clean XAML is easily styleable because few if any Element properties have values set. 
-
 
 ## Features
 

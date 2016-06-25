@@ -43,7 +43,7 @@
 
         public IList<GridLength> SameRowFormComponentModelsColumns { get; } = new List<GridLength>();
 
-        public Boolean ShowLabel => this.ViewModel.ShowLabel && !String.IsNullOrWhiteSpace(this.LabelText);
+        public Boolean ShowLabel => this.ViewModel.ShowLabel;
 
         public String StringFormat => this.ViewModel.StringFormat;
 

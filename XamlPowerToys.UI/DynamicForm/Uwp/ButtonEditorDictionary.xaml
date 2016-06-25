@@ -2,8 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:converters="clr-namespace:XamlPowerToys.UI.Converters"
                     xmlns:dynamicForm="clr-namespace:XamlPowerToys.UI.DynamicForm">
-
-    <DataTemplate x:Key="wpfCheckBoxEditorTemplate">
+    <DataTemplate x:Key="uwpButtonEditorTemplate">
         <Border MinWidth="700" HorizontalAlignment="Stretch" BorderBrush="LightGray" BorderThickness="1" Margin="5" Padding="5" CornerRadius="5">
             <Border.Resources>
                 <BooleanToVisibilityConverter x:Key="booleanToVisibilityConverter" />
@@ -17,7 +16,8 @@
             </Border.Resources>
 
             <StackPanel>
-                <dynamicForm:StandardEditorHeader EditorBindingTargetProperty="IsChecked"/>
+                <dynamicForm:StandardEditorHeader EditorBindingTargetProperty="Command"/>
+
                 <StackPanel Visibility="{Binding Path=DataContext.ShowExpandedView, Converter={StaticResource booleanToVisibilityConverter}, RelativeSource={RelativeSource AncestorType={x:Type dynamicForm:CreateFormView}}}">
                     <dynamicForm:StandardEditor>
                         <dynamicForm:StandardEditor.ControlSpecificContent>
@@ -25,15 +25,18 @@
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="100"/>
                                     <ColumnDefinition Width="175"/>
-                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Text="Content"/>
-                                <TextBox Text="{Binding Path=ControlSpecificProperties.Content, Mode=TwoWay}" Grid.Column="1" HorizontalAlignment="Left" Width="100" />
+
+                                <TextBlock Text="Button Text" />
+                                <TextBox Grid.Column="1" HorizontalAlignment="Left" Text="{Binding Path=ControlSpecificProperties.Content, Mode=TwoWay}" Width="165" />
                             </Grid>
                         </dynamicForm:StandardEditor.ControlSpecificContent>
+                        
                     </dynamicForm:StandardEditor>
                 </StackPanel>
             </StackPanel>
         </Border>
-    </DataTemplate>    
+    </DataTemplate>
+   
 </ResourceDictionary>

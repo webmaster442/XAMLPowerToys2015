@@ -2,6 +2,7 @@
     public enum BindingMode {
 
         Default,
+        OneTime,
         OneWay,
         OneWayToSource,
         TwoWay

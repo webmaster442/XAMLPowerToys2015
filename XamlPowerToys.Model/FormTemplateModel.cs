@@ -207,6 +207,14 @@
         }
 
         void MakeRootControl() {
+            if ((this.ProjectType == ProjectType.Wpf || this.ProjectType == ProjectType.Uwp) && 
+                this.FormComponentModelCollection.Count == 1 && 
+                this.RootObject == RootObject.Grid && 
+                !this.WrapGeneratedCodeInBorder && 
+                String.IsNullOrWhiteSpace(this.FormHeader)) {
+                return;
+            }
+
             switch (this.RootObject) {
                 case RootObject.None:
                     break;

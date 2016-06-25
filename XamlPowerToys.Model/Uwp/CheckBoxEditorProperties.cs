@@ -1,6 +1,6 @@
-﻿namespace XamlPowerToys.Model.Wpf {
+﻿namespace XamlPowerToys.Model.Uwp {
     using System;
-    using XamlPowerToys.Model.CodeGeneration.Wpf.Controls;
+    using XamlPowerToys.Model.CodeGeneration.Uwp.Controls;
 
     [Serializable]
     public class CheckBoxEditorProperties : ObservableObject, IEditEditor, IConstructControlFactory {
@@ -18,7 +18,7 @@
         public String TemplateResourceKey { get; }
 
         public CheckBoxEditorProperties() {
-            this.TemplateResourceKey = "wpfCheckBoxEditorTemplate";
+            this.TemplateResourceKey = "uwpCheckBoxEditorTemplate";
         }
 
         public IControlFactory Make(GenerateFormModel generateFormModel, PropertyInformationViewModel propertyInformationViewModel) {

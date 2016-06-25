@@ -90,29 +90,11 @@
             }
         }
 
-        public String SelectedItemText {
-            get {
-                if (String.IsNullOrWhiteSpace(this.SelectedItemPathText)) {
-                    return String.Empty;
-                }
-                return $"SelectedItem=\"{{Binding Path={this.SelectedItemPathText}, Mode=TwoWay\"}} ";
-            }
-        }
-
         public String SelectedValueBindingPath {
             get { return _selectedValueBindingPath; }
             set {
                 _selectedValueBindingPath = value;
                 RaisePropertyChanged();
-            }
-        }
-
-        public String SelectedValueBindingPathText {
-            get {
-                if (String.IsNullOrWhiteSpace(this.SelectedValueBindingPath)) {
-                    return String.Empty;
-                }
-                return $"SelectedValue=\"{{Binding Path={this.SelectedValueBindingPath}, Mode=TwoWay\"}} ";
             }
         }
 

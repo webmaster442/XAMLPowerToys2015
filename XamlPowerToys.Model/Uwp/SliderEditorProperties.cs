@@ -1,6 +1,6 @@
-﻿namespace XamlPowerToys.Model.Wpf {
+﻿namespace XamlPowerToys.Model.Uwp {
     using System;
-    using XamlPowerToys.Model.CodeGeneration.Wpf.Controls;
+    using XamlPowerToys.Model.CodeGeneration.Uwp.Controls;
 
     [Serializable]
     public class SliderEditorProperties : ObservableObject, IEditEditor, IConstructControlFactory {
@@ -11,7 +11,7 @@
         String _minimumPathText;
         Double _tickFrequency;
         String _tickFrequencyPathText;
-        WpfTickPlacement _wpfTickPlacement = WpfTickPlacement.None;
+        UwpTickPlacement _uwpTickPlacement = UwpTickPlacement.None;
 
         public Double Maximum {
             get { return _maximum; }
@@ -63,16 +63,16 @@
             }
         }
 
-        public WpfTickPlacement WpfTickPlacement {
-            get { return _wpfTickPlacement; }
+        public UwpTickPlacement UwpTickPlacement {
+            get { return _uwpTickPlacement; }
             set {
-                _wpfTickPlacement = value;
+                _uwpTickPlacement = value;
                 RaisePropertyChanged();
             }
         }
 
         public SliderEditorProperties() {
-            this.TemplateResourceKey = "wpfSliderEditorTemplate";
+            this.TemplateResourceKey = "uwpSliderEditorTemplate";
         }
 
         public IControlFactory Make(GenerateFormModel generateFormModel, PropertyInformationViewModel propertyInformationViewModel) {

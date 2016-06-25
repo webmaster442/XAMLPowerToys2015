@@ -14,6 +14,14 @@
             if (!String.IsNullOrWhiteSpace(converter)) {
                 converterText = $"Converter={{StaticResource {converter}}}, ";
             }
+            if (bindingMode == BindingMode.Default) {
+                var temp = $"{{Binding Path={path}, {converterText}{stringFormatText}{validationAttributes}";
+                if (temp.EndsWith(", ")) {
+                    temp = temp.Replace(", ", String.Empty);
+                }
+                temp = temp + "}";
+                return temp;
+            }
             return $"{{Binding Path={path}, {converterText}Mode={bindingMode}{stringFormatText}{validationAttributes}}}";
         }
 

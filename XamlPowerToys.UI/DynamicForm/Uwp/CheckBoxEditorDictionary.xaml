@@ -3,7 +3,7 @@
                     xmlns:converters="clr-namespace:XamlPowerToys.UI.Converters"
                     xmlns:dynamicForm="clr-namespace:XamlPowerToys.UI.DynamicForm">
 
-    <DataTemplate x:Key="wpfCheckBoxEditorTemplate">
+    <DataTemplate x:Key="uwpCheckBoxEditorTemplate">
         <Border MinWidth="700" HorizontalAlignment="Stretch" BorderBrush="LightGray" BorderThickness="1" Margin="5" Padding="5" CornerRadius="5">
             <Border.Resources>
                 <BooleanToVisibilityConverter x:Key="booleanToVisibilityConverter" />
@@ -18,6 +18,7 @@
 
             <StackPanel>
                 <dynamicForm:StandardEditorHeader EditorBindingTargetProperty="IsChecked"/>
+
                 <StackPanel Visibility="{Binding Path=DataContext.ShowExpandedView, Converter={StaticResource booleanToVisibilityConverter}, RelativeSource={RelativeSource AncestorType={x:Type dynamicForm:CreateFormView}}}">
                     <dynamicForm:StandardEditor>
                         <dynamicForm:StandardEditor.ControlSpecificContent>

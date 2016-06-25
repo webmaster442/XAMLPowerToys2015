@@ -1,6 +1,6 @@
 # Roadmap
 
-- [ ] Add support for Xamarin Forms UWP, waiting for someone to ask for it.
+- [ ] Suggest a feature.
 
 Features that have a checkmark are complete and available for
 download in the
@@ -9,6 +9,15 @@ download in the
 # Changelog
 
 These are the changes to each version that has been released on the official Visual Studio extension gallery.
+
+## 1.0.7
+
+**2016-06-25**
+
+- [x] Added support for Windows Universal applications
+- [x] Added Content property to WPF CheckBox control.
+- [x] For WPF and UWP, no longer code generating extra form wrapping Grid when only one column is rendered.
+
 
 ## 1.0.5
 

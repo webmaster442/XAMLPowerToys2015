@@ -1,9 +1,9 @@
-﻿namespace XamlPowerToys.Model.CodeGeneration.Wpf.Controls {
+﻿namespace XamlPowerToys.Model.CodeGeneration.Uwp.Controls {
     using System;
     using System.Text;
     using XamlPowerToys.Model.CodeGeneration.Infrastructure;
     using XamlPowerToys.Model.Infrastructure;
-    using XamlPowerToys.Model.Wpf;
+    using XamlPowerToys.Model.Uwp;
 
     public class SliderFactory : IControlFactory {
 
@@ -43,14 +43,14 @@
                 sb.Append($"TickFrequency=\"{_model.EditorProperties.TickFrequency}\" ");
             }
 
+            sb.Append($"TickPlacement=\"{_model.EditorProperties.UwpTickPlacement}\" ");
+            
             if (parentGridColumn != null) {
                 sb.Append($"Grid.Column=\"{parentGridColumn.Value}\" ");
             }
             if (parentGridRow != null) {
                 sb.Append($"Grid.Row=\"{parentGridRow.Value}\" ");
             }
-
-            sb.Append($"TickPlacement=\"{_model.EditorProperties.WpfTickPlacement}\" ");
 
             sb.Append(_model.WidthText);
             sb.Append(_model.HeightText);

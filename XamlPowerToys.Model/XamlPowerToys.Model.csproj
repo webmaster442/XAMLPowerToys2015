@@ -77,6 +77,15 @@
     </Compile>
     <Compile Include="CodeGeneration\UIGeneration.cs" />
     <Compile Include="CodeGeneration\UIFormTemplateModel.cs" />
+    <Compile Include="CodeGeneration\Uwp\Controls\ButtonFactory.cs" />
+    <Compile Include="CodeGeneration\Uwp\Controls\ToggleButtonFactory.cs" />
+    <Compile Include="CodeGeneration\Uwp\Controls\CheckBoxFactory.cs" />
+    <Compile Include="CodeGeneration\Uwp\Controls\ComboBoxFactory.cs" />
+    <Compile Include="CodeGeneration\Uwp\Controls\DatePickerFactory.cs" />
+    <Compile Include="CodeGeneration\Uwp\Controls\ImageFactory.cs" />
+    <Compile Include="CodeGeneration\Uwp\Controls\SliderFactory.cs" />
+    <Compile Include="CodeGeneration\Uwp\Controls\TextBlockFactory.cs" />
+    <Compile Include="CodeGeneration\Uwp\Controls\TextBoxFactory.cs" />
     <Compile Include="CodeGeneration\Wpf\Controls\ButtonFactory.cs" />
     <Compile Include="CodeGeneration\Wpf\Controls\CheckBoxFactory.cs" />
     <Compile Include="CodeGeneration\Wpf\Controls\ComboBoxFactory.cs" />
@@ -126,6 +135,17 @@
     <Compile Include="ControlTemplateModel.cs" />
     <Compile Include="RootObject.cs" />
     <Compile Include="SelectorBase.cs" />
+    <Compile Include="UwpTickPlacement.cs" />
+    <Compile Include="Uwp\ButtonEditorProperties.cs" />
+    <Compile Include="Uwp\ToggleButtonEditorProperties.cs" />
+    <Compile Include="Uwp\CheckBoxEditorProperties.cs" />
+    <Compile Include="Uwp\ComboBoxEditorProperties.cs" />
+    <Compile Include="Uwp\DatePickerEditorProperties.cs" />
+    <Compile Include="Uwp\ImageEditorProperties.cs" />
+    <Compile Include="Uwp\SliderEditorProperties.cs" />
+    <Compile Include="Uwp\TextBlockEditorProperties.cs" />
+    <Compile Include="Uwp\TextBoxEditorProperties.cs" />
+    <Compile Include="WpfTickPlacement.cs" />
     <Compile Include="Wpf\ButtonEditorProperties.cs" />
     <Compile Include="Wpf\CheckBoxEditorProperties.cs" />
     <Compile Include="Wpf\ComboBoxEditorProperties.cs" />
@@ -155,9 +175,7 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="CodeGeneration\Uwp\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="CodeGeneration\UIFormTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>

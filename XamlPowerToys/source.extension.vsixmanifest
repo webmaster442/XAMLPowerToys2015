@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="d01c1624-8838-4097-bf77-f52d73fc7a1f" Version="1.0.0" Language="en-US" Publisher="Karl Shifflett" />
+        <Identity Id="d01c1624-8838-4097-bf77-f52d73fc7a1f" Version="1.1.0" Language="en-US" Publisher="Karl Shifflett" />
         <DisplayName>XAML Power Toys for Visual Studio 2015</DisplayName>
-        <Description xml:space="preserve">Visual Studio 2015 extension that enables developers to rapidly generate data entry forms from view models or entity objects for Xamarin Forms or WPF.</Description>
+        <Description xml:space="preserve">Visual Studio 2015 extension that enables developers to rapidly generate data entry forms from view models or entity objects for Xamarin Forms, UPW, and WPF.</Description>
         <License>Resources\LICENSE</License>
         <Icon>Resources\Icon.png</Icon>
         <PreviewImage>Resources\Preview.png</PreviewImage>

@@ -48,7 +48,7 @@
             var cmd = (OleMenuCommand)sender;
 
             // future proofing when Visual Studio changes the editor for Xamarin
-            cmd.Visible = result == ProjectType.Wpf || result == ProjectType.Xamarin;
+            cmd.Visible = result == ProjectType.Wpf || result == ProjectType.Xamarin || result == ProjectType.Uwp;
         }
 
         void MenuItemCallback(Object sender, EventArgs e) {

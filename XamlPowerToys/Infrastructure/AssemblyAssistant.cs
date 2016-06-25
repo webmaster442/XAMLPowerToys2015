@@ -65,7 +65,9 @@
 
         internal static Boolean SkipLoadingAssembly(String assemblyName) {
             assemblyName = assemblyName.ToLower();
-
+            if (assemblyName.StartsWith("windows.")) {
+                return true;
+            }
             if (assemblyName.StartsWith("xamarin")) {
                 return true;
             }
