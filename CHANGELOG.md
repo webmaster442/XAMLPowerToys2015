@@ -10,6 +10,13 @@ download in the
 
 These are the changes to each version that has been released on the official Visual Studio extension gallery.
 
+## 1.2.10
+
+**2016-07-16**
+
+- [x] Cut support dragging unbound controls to the design surface.  Feature worked in debug builds, but always failed in VSIX builds.  Spent 4 hours trying to fix it, no joy.
+
+
 ## 1.2.9
 
 **2016-07-16**

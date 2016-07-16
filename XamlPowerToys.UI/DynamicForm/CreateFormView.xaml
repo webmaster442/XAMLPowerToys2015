@@ -233,12 +233,12 @@
         </Button>
 
         <Grid Grid.Row="2">
-            <Grid.RowDefinitions>
+            <!--<Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="80" />
-            </Grid.RowDefinitions>
-            <ListBox x:Name="lbPropertyInformationCollection" BorderThickness="1" BorderBrush="LightGray" Padding="3" Margin="3" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Path=PropertyInformationCollection}" IsTabStop="False" dragDrop:DragDropHelper.IsDragSource="True" dragDrop:DragDropHelper.IsDropTarget="True" dragDrop:DragDropHelper.IsMasterListControl="True" dragDrop:DragDropHelper.DragDropTemplate="{StaticResource fieldsListDragDropDataTemplate}">
+            </Grid.RowDefinitions>-->
+            <ListBox VerticalAlignment="Stretch" x:Name="lbPropertyInformationCollection" BorderThickness="1" BorderBrush="LightGray" Padding="3" Margin="3" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Path=PropertyInformationCollection}" IsTabStop="False" dragDrop:DragDropHelper.IsDragSource="True" dragDrop:DragDropHelper.IsDropTarget="True" dragDrop:DragDropHelper.IsMasterListControl="True" dragDrop:DragDropHelper.DragDropTemplate="{StaticResource fieldsListDragDropDataTemplate}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid>
@@ -264,9 +264,9 @@
                 </ListBox.ItemTemplate>
             </ListBox>
 
-            <TextBlock Grid.Row="1" FontWeight="Bold" Margin="5, 15,5,10" Text="Unbound Controls"/>
+            <!--<TextBlock Visibility="Collapsed" Grid.Row="1" FontWeight="Bold" Margin="5, 15,5,10" Text="Unbound Controls"/>
 
-            <ListBox Grid.Row="2" ItemsSource="{Binding Path=NonBindingControlsCollection}" BorderThickness="1" BorderBrush="LightGray" Padding="3" Margin="3" HorizontalContentAlignment="Stretch" IsTabStop="False" dragDrop:DragDropHelper.IsDragSource="True" dragDrop:DragDropHelper.IsDropTarget="True" dragDrop:DragDropHelper.IsNonBindingControlsListControl="True" dragDrop:DragDropHelper.DragDropTemplate="{StaticResource fieldsListDragDropDataTemplate}">
+            <ListBox Visibility="Collapsed" Grid.Row="2" ItemsSource="{Binding Path=NonBindingControlsCollection}" BorderThickness="1" BorderBrush="LightGray" Padding="3" Margin="3" HorizontalContentAlignment="Stretch" IsTabStop="False" dragDrop:DragDropHelper.IsDragSource="True" dragDrop:DragDropHelper.IsDropTarget="True" dragDrop:DragDropHelper.IsNonBindingControlsListControl="True" dragDrop:DragDropHelper.IsMasterListControl="False" dragDrop:DragDropHelper.DragDropTemplate="{StaticResource fieldsListDragDropDataTemplate}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid>
@@ -274,7 +274,7 @@
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
-            </ListBox>
+            </ListBox>-->
         </Grid>
 
         <GridSplitter Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" />

@@ -98,6 +98,7 @@
 
             var isOriginalSourceMasterListControl = (Boolean)originalSourceListBox.GetValue(DragDropHelper.IsMasterListControlProperty);
             var isDropSourceMasterListControl = (Boolean)dropSourceListBox.GetValue(DragDropHelper.IsMasterListControlProperty);
+
             var createFormViewModel = (CreateFormViewModel)dropSourceListBox.DataContext;
             Boolean allowDrop;
 
@@ -107,7 +108,7 @@
                 allowDrop = false;
             } else {
                 allowDrop = true;
-            }
+           }
 
             if (allowDrop && IsDropDataTypeAllowed(draggedItem)) {
                 if (targetItemsControlCount > 0) {
@@ -131,11 +132,14 @@
                     this._targetItemContainer = null;
                     this._insertionIndex = 0;
                 }
+
             } else {
                 this._targetItemContainer = null;
                 this._insertionIndex = -1;
                 e.Effects = DragDropEffects.None;
             }
+
+            e.Handled = true;
         }
 
         void DragSource_PreviewMouseLeftButtonDown(Object sender, MouseButtonEventArgs e) {
@@ -229,6 +233,11 @@
             e.Handled = true;
         }
 
+        /// <summary>
+        /// Drops the target_ preview drop.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="DragEventArgs"/> instance containing the event data.</param>
         void DropTarget_PreviewDrop(Object sender, DragEventArgs e) {
             var draggedItem = e.Data.GetData(this._format.Name);
             var indexRemoved = -1;
@@ -258,16 +267,15 @@
                 if (!isNonBindingControlsListControl) {
                     Utilities.InsertItemInItemsControl(this._targetItemsControl, propertyInformation, this._insertionIndex);
 
-                    if (!isDropSourceMasterListControl) {
-                    } else {
+                    if (isDropSourceMasterListControl) {
                         propertyInformation.ResetUserEnteredValues();
                     }
                 }
 
                 RemoveDraggedAdorner();
                 RemoveInsertionAdorner();
-            }
-            e.Handled = true;
+                e.Handled = true;
+            } 
         }
 
         static void IsDragSourceChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e) {

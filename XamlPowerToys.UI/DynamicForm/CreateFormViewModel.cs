@@ -366,6 +366,7 @@
             foreach (var name in Enum.GetNames(typeof(ControlType))) {
                 if (name.StartsWith(_projectTypeName)) {
                     if (name.Contains("Button") || name.Contains("Label") || name.Contains("Image")) {
+                        //var viewModel = new PropertyInformationViewModel(true, name, String.Empty, String.Empty, this.ClassEntity.ProjectType, String.Empty, false, true);
                         var viewModel = new PropertyInformationViewModel(true, name, String.Empty, String.Empty, this.ClassEntity.ProjectType, String.Empty, false, true);
                         viewModel.ControlDefinition = viewModel.ControlDefinitions.First(x => x.ControlType.ToString() == name);
 

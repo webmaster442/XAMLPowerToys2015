@@ -104,6 +104,8 @@
             lb.SetValue(KeyboardNavigation.TabNavigationProperty, KeyboardNavigationMode.Continue);
             lb.SetValue(DragDropHelper.IsDragSourceProperty, true);
             lb.SetValue(DragDropHelper.IsDropTargetProperty, true);
+            lb.SetValue(DragDropHelper.IsMasterListControlProperty, false);
+            lb.Tag = "dropUnboundControlsHere";
             lb.SetValue(DragDropHelper.DragDropTemplateProperty, this.FindResource("fieldsListDragDropDataTemplate"));
             lb.SetValue(ItemsControl.ItemTemplateSelectorProperty, this.FindResource("editorDataTemplateSelector"));
             lb.SetValue(Grid.ColumnProperty, gridColumnIndex);
