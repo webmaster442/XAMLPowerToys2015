@@ -21,7 +21,7 @@ To get the most our of XAML Power Toys, and to create complex forms like the one
 
 **Training Videos** on my blog [here](https://oceanware.wordpress.com/xaml-power-toys/)
 
-##Primary Scenario##
+##Xamarin Forms Primary Scenario##
 
 At the writing of this, the primary scenario for Xamarin Forms is pages that don't require Platform specific features to accomplish the layout, navigation, animation, or functional implementation.
 

@@ -10,7 +10,14 @@ download in the
 
 These are the changes to each version that has been released on the official Visual Studio extension gallery.
 
-## 1.0.7
+## 1.2.9
+
+**2016-07-16**
+
+- [x] Added support for Visual Studio Community Edition
+
+
+## 1.1.7
 
 **2016-06-25**
 
