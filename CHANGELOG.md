@@ -10,6 +10,13 @@ download in the
 
 These are the changes to each version that has been released on the official Visual Studio extension gallery.
 
+## 1.2.17
+
+**2016-07-17**
+
+- [x] Corrected Date Picker Minimum and Maximum binding to view model properties to OneWay binding instead of two way.
+
+
 ## 1.2.16
 
 **2016-07-17**

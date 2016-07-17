@@ -30,7 +30,7 @@
             }
 
             if (!String.IsNullOrWhiteSpace(_model.EditorProperties.MaximumDatePathText)) {
-                sb.AppendFormat("MaximumDate=\"{0}\" ", Helpers.ConstructBinding(_model.EditorProperties.MaximumDatePathText, _model.BindingMode, String.Empty, _model.BindingConverter));
+                sb.AppendFormat("MaximumDate=\"{0}\" ", Helpers.ConstructBinding(_model.EditorProperties.MaximumDatePathText, BindingMode.OneWay, String.Empty, _model.BindingConverter));
             } else if (_model.EditorProperties.SetMaximumDateToDateTimeNow) {
                 sb.Append($"MaximumDate=\"{{x:Static sys:DateTime.Now}}\" ");
             } else if (_model.EditorProperties.MaximumDate.HasValue) {
@@ -38,7 +38,7 @@
             }
 
             if (!String.IsNullOrWhiteSpace(_model.EditorProperties.MinimumDatePathText)) {
-                sb.AppendFormat("MinimumDate=\"{0}\" ", Helpers.ConstructBinding(_model.EditorProperties.MinimumDatePathText, _model.BindingMode, String.Empty, _model.BindingConverter));
+                sb.AppendFormat("MinimumDate=\"{0}\" ", Helpers.ConstructBinding(_model.EditorProperties.MinimumDatePathText, BindingMode.OneWay, String.Empty, _model.BindingConverter));
             } else if (_model.EditorProperties.SetMinimumDateToDateTimeNow) {
                 sb.Append($"MinimumDate=\"{{x:Static sys:DateTime.Now}}\" ");
             } else if (_model.EditorProperties.MinimumDate.HasValue) {
