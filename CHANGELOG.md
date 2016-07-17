@@ -10,6 +10,13 @@ download in the
 
 These are the changes to each version that has been released on the official Visual Studio extension gallery.
 
+## 1.2.15
+
+**2016-07-17**
+
+- [x] Added ability to render an image instead of a label from the Advanced Options.
+
+
 ## 1.2.10
 
 **2016-07-16**

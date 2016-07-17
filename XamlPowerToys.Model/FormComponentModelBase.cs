@@ -27,6 +27,8 @@
 
         public Boolean IsNonBindingControl => this.ViewModel.IsNonBindingControl;
 
+        public String LabelImageName => this.ViewModel.LabelImageName;
+
         public String LabelText => this.ViewModel.LabelText;
 
         public Int32? LabelWidth => this.ViewModel.LabelWidth;

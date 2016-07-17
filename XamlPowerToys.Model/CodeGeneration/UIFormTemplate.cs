@@ -20,7 +20,7 @@ namespace XamlPowerToys.Model.CodeGeneration
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "C:\Dev\vs2015\xamlpowertoys2015\XamlPowerToys.Model\CodeGeneration\UIFormTemplate.tt"
+    #line 1 "C:\Dev\vs2015\XAMLPowerToys2015\XamlPowerToys.Model\CodeGeneration\UIFormTemplate.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "14.0.0.0")]
     public partial class UIFormTemplate : UIFormTemplateBase
     {
@@ -31,7 +31,7 @@ namespace XamlPowerToys.Model.CodeGeneration
         public virtual string TransformText()
         {
             
-            #line 9 "C:\Dev\vs2015\xamlpowertoys2015\XamlPowerToys.Model\CodeGeneration\UIFormTemplate.tt"
+            #line 9 "C:\Dev\vs2015\XAMLPowerToys2015\XamlPowerToys.Model\CodeGeneration\UIFormTemplate.tt"
  
 	if (this.Model.WrapGeneratedCodeInBorder) {
 		WriteLine(this.Model.BorderHelper.StartTag());
@@ -79,7 +79,7 @@ namespace XamlPowerToys.Model.CodeGeneration
 
 			// when requested write label above control
 			if (this.Model.LabelPosition == LabelPosition.Top && formComponentModel.ShowLabel) {
-				WriteLine(this.Model.LabelHelper.MakeTag(formComponentModel.LabelText, formComponentModel.LabelWidthText, null, currentRootRow));
+				WriteLine(this.Model.LabelHelper.MakeTag(formComponentModel.LabelText, formComponentModel.LabelImageName, formComponentModel.LabelWidthText, null, currentRootRow));
 				if (this.Model.ColumnRootObject == RootObject.Grid) {
 					currentRootRow += 1;	
 				}
@@ -108,7 +108,7 @@ namespace XamlPowerToys.Model.CodeGeneration
 				}
 
 				if (this.Model.LabelPosition == LabelPosition.Left && formComponentModel.ShowLabel) {
-					WriteLine(this.Model.LabelHelper.MakeTag(formComponentModel.LabelText, formComponentModel.LabelWidthText, 0, 0));
+					WriteLine(this.Model.LabelHelper.MakeTag(formComponentModel.LabelText, formComponentModel.LabelImageName, formComponentModel.LabelWidthText, 0, 0));
 					currentInnerGridColumn += 1;
 				}
 								
@@ -117,7 +117,7 @@ namespace XamlPowerToys.Model.CodeGeneration
 
 				foreach (var item in formComponentModel.SameRowFormComponentModels) {
 					if (item.ShowLabel) {
-						WriteLine(this.Model.LabelHelper.MakeTag(item.LabelText, item.LabelWidthText, currentInnerGridColumn));
+						WriteLine(this.Model.LabelHelper.MakeTag(item.LabelText, item.LabelImageName, item.LabelWidthText, currentInnerGridColumn, null));
 						currentInnerGridColumn += 1;
 					}
 
@@ -127,7 +127,7 @@ namespace XamlPowerToys.Model.CodeGeneration
 
 				WriteLine(this.Model.GridHelper.EndTag());
 
-			// column root = stack layout && control layout is grid
+			// column root = grid layout && control layout is grid
             } else if (formComponentModel.ColumnRootObject == RootObject.Grid && formComponentModel.ControlLayoutRoot == RootObject.Grid) {
 				
 				var currentColumn = 0;
@@ -146,7 +146,7 @@ namespace XamlPowerToys.Model.CodeGeneration
 				componentColumns.AddRange(formComponentModel.SameRowFormComponentModelsColumns);
 				
 				if (this.Model.LabelPosition == LabelPosition.Left && formComponentModel.ShowLabel && formComponentModel.IncludeNextControlInRow) {
-					WriteLine(this.Model.LabelHelper.MakeTag(formComponentModel.LabelText, formComponentModel.LabelWidthText, 0, currentRootRow));
+					WriteLine(this.Model.LabelHelper.MakeTag(formComponentModel.LabelText, formComponentModel.LabelImageName, formComponentModel.LabelWidthText, 0, currentRootRow));
 					currentColumn += 1;
 				}
 
@@ -156,7 +156,7 @@ namespace XamlPowerToys.Model.CodeGeneration
 				}
 
 				if (this.Model.LabelPosition == LabelPosition.Left && formComponentModel.ShowLabel && !formComponentModel.IncludeNextControlInRow) {
-					WriteLine(this.Model.LabelHelper.MakeTag(formComponentModel.LabelText, formComponentModel.LabelWidthText, 0, 0));
+					WriteLine(this.Model.LabelHelper.MakeTag(formComponentModel.LabelText, formComponentModel.LabelImageName, formComponentModel.LabelWidthText, 0, 0));
 					currentInnerGridColumn += 1;
 				}
 								
@@ -165,7 +165,7 @@ namespace XamlPowerToys.Model.CodeGeneration
 
 				foreach (var item in formComponentModel.SameRowFormComponentModels) {
 					if (item.ShowLabel) {
-						WriteLine(this.Model.LabelHelper.MakeTag(item.LabelText, item.LabelWidthText, currentInnerGridColumn));
+						WriteLine(this.Model.LabelHelper.MakeTag(item.LabelText, item.LabelImageName, item.LabelWidthText, currentInnerGridColumn, null));
 						currentInnerGridColumn += 1;
 					}
 
@@ -203,7 +203,7 @@ namespace XamlPowerToys.Model.CodeGeneration
 				}
 
 				if (this.Model.LabelPosition == LabelPosition.Left && formComponentModel.ShowLabel) {
-					WriteLine(this.Model.LabelHelper.MakeTag(formComponentModel.LabelText, formComponentModel.LabelWidthText, 0, 0));
+					WriteLine(this.Model.LabelHelper.MakeTag(formComponentModel.LabelText, formComponentModel.LabelImageName, formComponentModel.LabelWidthText, 0, 0));
 					currentInnerGridColumn += 1;
 				}
 								
@@ -212,7 +212,7 @@ namespace XamlPowerToys.Model.CodeGeneration
 
 				foreach (var item in formComponentModel.SameRowFormComponentModels) {
 					if (item.ShowLabel) {
-						WriteLine(this.Model.LabelHelper.MakeTag(item.LabelText, item.LabelWidthText, currentInnerGridColumn));
+						WriteLine(this.Model.LabelHelper.MakeTag(item.LabelText, item.LabelImageName, item.LabelWidthText, currentInnerGridColumn, null));
 						currentInnerGridColumn += 1;
 					}
 
@@ -227,7 +227,7 @@ namespace XamlPowerToys.Model.CodeGeneration
 			// render control with out row wrapping control, 
 			} else {
 				if (this.Model.LabelPosition == LabelPosition.Left && formComponentModel.ShowLabel) {
-					WriteLine(this.Model.LabelHelper.MakeTag(formComponentModel.LabelText, formComponentModel.LabelWidthText, null, currentRootRow));
+					WriteLine(this.Model.LabelHelper.MakeTag(formComponentModel.LabelText, String.Empty, formComponentModel.LabelWidthText, null, currentRootRow));
 					WriteLine(formComponentModel.ControlFactory.MakeControl(1, currentRootRow));	
 				} else {
 					WriteLine(formComponentModel.ControlFactory.MakeControl(null, currentRootRow));	
@@ -240,7 +240,7 @@ namespace XamlPowerToys.Model.CodeGeneration
 				
 			// when requested write label below control
 			if (this.Model.LabelPosition == LabelPosition.Bottom && formComponentModel.ShowLabel) {
-				WriteLine(this.Model.LabelHelper.MakeTag(formComponentModel.LabelText, formComponentModel.LabelWidthText, null, currentRootRow));
+				WriteLine(this.Model.LabelHelper.MakeTag(formComponentModel.LabelText, String.Empty, formComponentModel.LabelWidthText, null, currentRootRow));
 				if (this.Model.ColumnRootObject == RootObject.Grid) {
 					currentRootRow += 1;	
 				}

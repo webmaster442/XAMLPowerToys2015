@@ -19,6 +19,7 @@
         Object _controlSpecificProperties;
         Int32? _height;
         Boolean _includeNextControlInRow;
+        String _labelImageName;
         String _labelText;
         Int32? _labelWidth;
         Int32? _maximumLength;
@@ -143,6 +144,14 @@
         public Boolean IsReadOnly => !this.CanWrite;
 
         public IEnumerable<String> Keyboards { get; }
+
+        public String LabelImageName {
+            get { return _labelImageName; }
+            set {
+                _labelImageName = value;
+                RaisePropertyChanged();
+            }
+        }
 
         public String LabelText {
             get { return _labelText; }
@@ -269,28 +278,6 @@
             SetDefaultControlDefinition();
         }
 
-        void SetBindingModes() {
-            if (!this.IsNonBindingControl) {
-                var list = new List<String>();
-                foreach (var item in Enum.GetNames(typeof(BindingMode))) {
-                    if (_projectType == ProjectType.Uwp) {
-                        if (item == "Default" || item == "OneWayToSource") {
-                            continue;
-                        }
-
-                    } else if (_projectType == ProjectType.Xamarin) {
-                        if (item == "OneTime") {
-                            continue;
-                        }
-
-                    }
-                    list.Add(item);
-                }
-                this.BindingModes = list;
-            }
-
-        }
-
         public Int32 CompareTo(PropertyInformationViewModel other) {
             if (this.Name == other.Name) {
                 return 0;
@@ -323,6 +310,25 @@
                 }
             }
             return list;
+        }
+
+        void SetBindingModes() {
+            if (!this.IsNonBindingControl) {
+                var list = new List<String>();
+                foreach (var item in Enum.GetNames(typeof(BindingMode))) {
+                    if (_projectType == ProjectType.Uwp) {
+                        if (item == "Default" || item == "OneWayToSource") {
+                            continue;
+                        }
+                    } else if (_projectType == ProjectType.Xamarin) {
+                        if (item == "OneTime") {
+                            continue;
+                        }
+                    }
+                    list.Add(item);
+                }
+                this.BindingModes = list;
+            }
         }
 
         void SetControlSpecificPropertiesObject() {

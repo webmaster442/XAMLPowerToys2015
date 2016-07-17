@@ -121,6 +121,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
             <CheckBox Grid.Column="0" Grid.ColumnSpan="2" Margin="0,10,0,0" Content="Include Next Control In Row" IsChecked="{Binding Path=IncludeNextControlInRow, Mode=TwoWay}"/>
@@ -136,6 +137,8 @@
                       HorizontalAlignment="Left"
                       ItemsSource="{Binding Path=DataContext.AvailableConverters, RelativeSource={RelativeSource AncestorType={x:Type dynamicForm:CreateFormView}}}"
                       SelectedValue="{Binding Path=BindingConverter, Mode=TwoWay}" />
+            <TextBlock Margin="0,10,0,0" Text="Label Image" Grid.Row="2" ToolTip="Enter the name of the image to display instead of the label text."/>
+            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Path=LabelImageName, Mode=TwoWay, ValidatesOnDataErrors=True, ValidatesOnExceptions=True, ValidatesOnNotifyDataErrors=True, TargetNullValue=''}" Margin="0,10,0,0" Width="165" HorizontalAlignment="Left" ToolTip="Enter the name of the image to display instead of the label text."/>
         </Grid>
     </StackPanel>
 </UserControl>
