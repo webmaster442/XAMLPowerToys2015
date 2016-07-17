@@ -83,8 +83,8 @@
                 <ColumnDefinition Width="Auto" SharedSizeGroup="buttons" />
                 <ColumnDefinition Width="Auto" SharedSizeGroup="buttons" />
             </Grid.ColumnDefinitions>
-            <Button x:Name="btnNext" Click="btnNext_Click" IsEnabled="False" Padding="3.5" Margin="3.5" Grid.Column="1" Content="Next..." VerticalAlignment="Center" HorizontalAlignment="Left"/>
-            <Button x:Name="btnCancel" Click="btnCancel_Click" Padding="3.5" Margin="3.5" Grid.Column="2" Content="Cancel" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+            <Button x:Name="btnNext" Click="btnNext_Click" IsEnabled="False" Padding="3.5" Margin="3.5" Grid.Column="1" Content="Next..." VerticalAlignment="Center" HorizontalAlignment="Left" IsDefault="True"/>
+            <Button x:Name="btnCancel" Click="btnCancel_Click" Padding="3.5" Margin="3.5" Grid.Column="2" Content="Cancel" VerticalAlignment="Center" HorizontalAlignment="Left" IsCancel="True"/>
         </Grid>
     </Grid>
 

@@ -10,6 +10,13 @@ download in the
 
 These are the changes to each version that has been released on the official Visual Studio extension gallery.
 
+## 1.2.16
+
+**2016-07-17**
+
+- [x] On select view model window, set Next button as IsDefault, and the Cancel button as IsCancel
+
+
 ## 1.2.15
 
 **2016-07-17**
