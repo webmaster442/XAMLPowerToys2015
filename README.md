@@ -61,6 +61,8 @@ From a XAML file in a Xamarin Forms or WPF project, right click in the editor wh
 ![Context Menu](Art/context-menu.png)
 
 #### Select Source Class
+Beginning with release 1.2.18, internal types are included in the listed classes from the same assembly as the XAML file you launched XAML Power Toys from.
+
 After clicking the XAML Power Toys command in the context menu, the below Select Source Class dialog appears.
 
 ![Select Source Class](Art/select-source-class.png)

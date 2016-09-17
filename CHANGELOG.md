@@ -10,6 +10,13 @@ download in the
 
 These are the changes to each version that has been released on the official Visual Studio extension gallery.
 
+## 1.2.18
+
+**2016-09-17**
+
+- [x] Enabled reflecting and including internal types in select class list.
+
+
 ## 1.2.17
 
 **2016-07-17**

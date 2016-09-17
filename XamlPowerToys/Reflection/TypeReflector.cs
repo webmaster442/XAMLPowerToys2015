@@ -47,7 +47,7 @@
             var assembliesToLoad = new Hashtable();
 
             //load the source assembly
-            assembliesToLoad.Add(assemblyPath.ToLower(), String.Empty);
+            //assembliesToLoad.Add(assemblyPath.ToLower(), String.Empty);
 
             //load up all referenced assemblies for above assemblyPath
             foreach (AssemblyNameReference assemblyReference in sourceAssemblyDefinition.MainModule.AssemblyReferences) {
@@ -66,13 +66,13 @@
                 }
             }
 
-            ReflectClasses(sourceAssemblyDefinition, projectFrameworkType, projectFrameworkVersion, classEntities);
+            ReflectClasses(sourceAssemblyDefinition, projectFrameworkType, projectFrameworkVersion, classEntities, ActiveProject.Yes);
             foreach (var asyPath in assembliesToLoad.Keys) {
                 var asyResolver = new DefaultAssemblyResolver();
                 asyResolver.AddSearchDirectory(Path.GetDirectoryName(assemblyPath));
                 var asyReader = new ReaderParameters {AssemblyResolver = asyResolver};
 
-                ReflectClasses(AssemblyDefinition.ReadAssembly(asyPath.ToString(), asyReader), projectFrameworkType, projectFrameworkVersion, classEntities);
+                ReflectClasses(AssemblyDefinition.ReadAssembly(asyPath.ToString(), asyReader), projectFrameworkType, projectFrameworkVersion, classEntities, ActiveProject.No);
             }
 
             var listOfConverters = new List<String>();
@@ -278,7 +278,7 @@
             }
         }
 
-        void ReflectClasses(AssemblyDefinition asy, ProjectType projectFrameworkType, String projectFrameworkVersion, ClassEntities classEntities) {
+        void ReflectClasses(AssemblyDefinition asy, ProjectType projectFrameworkType, String projectFrameworkVersion, ClassEntities classEntities, ActiveProject activeProject) {
             if (asy == null) {
                 throw new ArgumentNullException(nameof(asy));
             }
@@ -291,9 +291,12 @@
             if (string.IsNullOrWhiteSpace(projectFrameworkVersion)) {
                 throw new ArgumentException("Value cannot be null or whitespace.", nameof(projectFrameworkVersion));
             }
+            if (!Enum.IsDefined(typeof(ActiveProject), activeProject)) {
+                throw new InvalidEnumArgumentException(nameof(activeProject), (int)activeProject, typeof(ActiveProject));
+            }
 
             foreach (TypeDefinition type in asy.MainModule.GetTypes()) {
-                if (type.IsPublic && type.IsClass && !type.IsAbstract && !type.Name.StartsWith("<") && !type.Name.Contains("AnonymousType") && type.Name != "AssemblyInfo" && !type.Name.StartsWith("__")) {
+                if ((type.IsPublic || (activeProject == ActiveProject.Yes && type.IsNotPublic && !type.IsNestedPrivate)) && type.IsClass && !type.IsAbstract && !type.Name.StartsWith("<") && !type.Name.Contains("AnonymousType") && type.Name != "AssemblyInfo" && !type.Name.StartsWith("__")) {
                     var previouslyLoaded = false;
 
                     foreach (var classEntity in classEntities) {
