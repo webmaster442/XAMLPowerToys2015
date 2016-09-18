@@ -10,6 +10,13 @@ download in the
 
 These are the changes to each version that has been released on the official Visual Studio extension gallery.
 
+## 1.3.18
+
+**2016-09-18**
+
+- [x] Enabled Silverlight 5
+
+
 ## 1.2.18
 
 **2016-09-17**

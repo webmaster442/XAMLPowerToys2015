@@ -21,7 +21,7 @@
             if (String.IsNullOrWhiteSpace(lableImageName)) {
                 if (_projectType == ProjectType.Xamarin) {
                     sb.Append($"<Label Text=\"{text}\" ");
-                } else if (_projectType == ProjectType.Uwp) {
+                } else if (_projectType == ProjectType.Uwp || _projectType == ProjectType.Silverlight) {
                     sb.Append($"<TextBlock Text=\"{text}\" ");
                 } else {
                     sb.Append($"<Label Content=\"{text}\" ");

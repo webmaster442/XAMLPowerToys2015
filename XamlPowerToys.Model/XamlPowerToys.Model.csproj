@@ -70,6 +70,14 @@
     <Compile Include="CodeGeneration\Infrastructure\TableViewHelper.cs" />
     <Compile Include="CodeGeneration\Infrastructure\TextBlockHelper.cs" />
     <Compile Include="CodeGeneration\Infrastructure\ViewCellHelper.cs" />
+    <Compile Include="CodeGeneration\Silverlight\Controls\ButtonFactory.cs" />
+    <Compile Include="CodeGeneration\Silverlight\Controls\CheckBoxFactory.cs" />
+    <Compile Include="CodeGeneration\Silverlight\Controls\ComboBoxFactory.cs" />
+    <Compile Include="CodeGeneration\Silverlight\Controls\DatePickerFactory.cs" />
+    <Compile Include="CodeGeneration\Silverlight\Controls\ImageFactory.cs" />
+    <Compile Include="CodeGeneration\Silverlight\Controls\SliderFactory.cs" />
+    <Compile Include="CodeGeneration\Silverlight\Controls\TextBlockFactory.cs" />
+    <Compile Include="CodeGeneration\Silverlight\Controls\TextBoxFactory.cs" />
     <Compile Include="CodeGeneration\UIFormTemplate.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -135,6 +143,14 @@
     <Compile Include="ControlTemplateModel.cs" />
     <Compile Include="RootObject.cs" />
     <Compile Include="SelectorBase.cs" />
+    <Compile Include="Silverlight\ButtonEditorProperties.cs" />
+    <Compile Include="Silverlight\CheckBoxEditorProperties.cs" />
+    <Compile Include="Silverlight\ComboBoxEditorProperties.cs" />
+    <Compile Include="Silverlight\DatePickerEditorProperties.cs" />
+    <Compile Include="Silverlight\ImageEditorProperties.cs" />
+    <Compile Include="Silverlight\SliderEditorProperties.cs" />
+    <Compile Include="Silverlight\TextBlockEditorProperties.cs" />
+    <Compile Include="Silverlight\TextBoxEditorProperties.cs" />
     <Compile Include="UwpTickPlacement.cs" />
     <Compile Include="Uwp\ButtonEditorProperties.cs" />
     <Compile Include="Uwp\ToggleButtonEditorProperties.cs" />

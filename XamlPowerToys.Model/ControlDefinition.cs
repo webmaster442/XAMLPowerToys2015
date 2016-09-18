@@ -27,6 +27,9 @@
             } else if (value.StartsWith(Constants.Xamarin)) {
                 this.ProjectType = ProjectType.Xamarin;
                 this.ShortName = value.Substring(7).SplitWords();
+            } else if (value.StartsWith(Constants.Silverlight)) {
+                this.ProjectType = ProjectType.Silverlight;
+                this.ShortName = value.Substring(11).SplitWords();
             } else {
                 this.ProjectType = ProjectType.Uwp;
                 this.ShortName = value.Substring(3).SplitWords();

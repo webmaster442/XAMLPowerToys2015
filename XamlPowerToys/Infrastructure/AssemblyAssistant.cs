@@ -35,6 +35,10 @@
             if (result.Contains("A5A43C5B-DE2A-4C0C-9213-0A381AF9435A")) {
                 return ProjectType.Uwp;
             }
+            if (result.Contains("A1591282-1198-4647-A2B1-27E5FF5F6F3B")) {
+                return ProjectType.Silverlight;
+            }
+
 
             return ProjectType.Unknown;
         }

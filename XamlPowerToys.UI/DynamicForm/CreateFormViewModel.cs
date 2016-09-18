@@ -21,7 +21,7 @@
         Boolean _isUIGenerationInProgress;
         Boolean _isXamarinFormsProject;
         ICommand _nextCommand;
-        int _numberOfColumns = 1;
+        Int32 _numberOfColumns = 1;
         readonly Stack<ClassEntity> _parentChildEntities = new Stack<ClassEntity>();
         readonly String _projectTypeName;
         IList<PropertyInformationViewModel> _propertyInformationCollection;
@@ -203,6 +203,11 @@
                     this.FormIconImageSource = "../Images/uwpLogo.png";
                     this.ShowColumnGroupControls = true;
                     break;
+                case ProjectType.Silverlight:
+                    this.FormIconImageSource = "../Images/silverlightLogo.png";
+                    this.ShowColumnGroupControls = true;
+                    break;
+
             }
 
             classEntity.PropertyInformationCollection.Sort();

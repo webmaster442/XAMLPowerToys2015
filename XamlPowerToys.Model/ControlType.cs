@@ -1,6 +1,14 @@
 ﻿namespace XamlPowerToys.Model {
     public enum ControlType {
 
+        SilverlightButton,
+        SilverlightCheckBox,
+        SilverlightComboBox,
+        SilverlightDatePicker,
+        SilverlightImage,
+        SilverlightTextBlock,
+        SilverlightTextBox,
+        SilverlightSlider,
         UwpButton,
         UwpCheckBox,
         UwpComboBox,

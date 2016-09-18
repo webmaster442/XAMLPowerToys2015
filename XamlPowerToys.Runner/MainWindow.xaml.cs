@@ -157,6 +157,7 @@
 
             var resolver = new DefaultAssemblyResolver();
             resolver.AddSearchDirectory(System.IO.Path.GetDirectoryName(path));
+
             var reader = new ReaderParameters {AssemblyResolver = resolver};
 
             var assemblyDefinition = AssemblyDefinition.ReadAssembly(path, reader);

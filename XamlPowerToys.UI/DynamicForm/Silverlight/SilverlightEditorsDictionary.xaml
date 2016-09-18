@@ -6,7 +6,6 @@
         <ResourceDictionary Source="ComboBoxEditorDictionary.xaml"/>
         <ResourceDictionary Source="DatePickerEditorDictionary.xaml"/>
         <ResourceDictionary Source="ImageEditorDictionary.xaml"/>
-        <ResourceDictionary Source="LabelEditorDictionary.xaml" />
         <ResourceDictionary Source="TextBlockEditorDictionary.xaml"/>
         <ResourceDictionary Source="TextBoxEditorDictionary.xaml" />
         <ResourceDictionary Source="SliderEditorDictionary.xaml"/>

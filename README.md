@@ -7,7 +7,7 @@ or get the [CI build](http://vsixgallery.com/extension/d01c1624-8838-4097-bf77-f
 
 ---------------------------------------
 
-Visual Studio 2015 extension that enables developers to rapidly generate data entry forms from view models or entity objects for Xamarin Forms, UWP, and WPF.
+Visual Studio 2015 extension that enables developers to rapidly generate data entry forms from view models or entity objects for Xamarin Forms, UWP, WPF, and **Silverlight**.
 
 See the [changelog](CHANGELOG.md) for changes and roadmap.
 

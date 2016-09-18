@@ -8,6 +8,7 @@
     using XF = XamlPowerToys.Model.XamarinForms;
     using WF = XamlPowerToys.Model.Wpf;
     using UW = XamlPowerToys.Model.Uwp;
+    using SL = XamlPowerToys.Model.Silverlight;
 
     [Serializable]
     public class PropertyInformationViewModel : ObservableObject, IComparable<PropertyInformationViewModel>, IEquatable<PropertyInformationViewModel> {
@@ -286,6 +287,9 @@
         }
 
         public Boolean Equals(PropertyInformationViewModel other) {
+            if (other == null) {
+                return false;
+            }
             return this.Name.Equals(other.Name);
         }
 
@@ -316,7 +320,7 @@
             if (!this.IsNonBindingControl) {
                 var list = new List<String>();
                 foreach (var item in Enum.GetNames(typeof(BindingMode))) {
-                    if (_projectType == ProjectType.Uwp) {
+                    if (_projectType == ProjectType.Uwp || _projectType == ProjectType.Silverlight) {
                         if (item == "Default" || item == "OneWayToSource") {
                             continue;
                         }
@@ -347,6 +351,9 @@
                 case ProjectType.Xamarin:
                     SetXamarinControlSpecificPropertiesObject();
                     break;
+                case ProjectType.Silverlight:
+                    SetSilverlightControlSpecificPropertiesObject();
+                    break;
             }
         }
 
@@ -360,6 +367,76 @@
                     break;
                 case ProjectType.Xamarin:
                     SetXamarinDefaultControlDefinition();
+                    break;
+                case ProjectType.Silverlight:
+                    SetSilverlightDefaultControlDefinition();
+                    break;
+            }
+        }
+
+        void SetSilverlightControlSpecificPropertiesObject() {
+            this.ShowStringFormatProperty = false;
+
+            switch (this.ControlDefinition.ControlType) {
+                case ControlType.SilverlightButton:
+                    this.ControlSpecificProperties = new SL.ButtonEditorProperties();
+                    break;
+                case ControlType.SilverlightCheckBox:
+                    this.ControlSpecificProperties = new SL.CheckBoxEditorProperties();
+                    break;
+                case ControlType.SilverlightComboBox:
+                    this.ControlSpecificProperties = new SL.ComboBoxEditorProperties();
+                    break;
+                case ControlType.SilverlightDatePicker:
+                    this.ControlSpecificProperties = new SL.DatePickerEditorProperties();
+                    break;
+                case ControlType.SilverlightImage:
+                    this.ControlSpecificProperties = new SL.ImageEditorProperties();
+                    break;
+                case ControlType.SilverlightSlider:
+                    this.ControlSpecificProperties = new SL.SliderEditorProperties();
+                    break;
+                case ControlType.SilverlightTextBlock:
+                    this.ShowStringFormatProperty = true;
+                    this.ControlSpecificProperties = new SL.TextBlockEditorProperties();
+                    break;
+                case ControlType.SilverlightTextBox:
+                    this.ShowStringFormatProperty = true;
+                    this.ControlSpecificProperties = new SL.TextBoxEditorProperties();
+                    break;
+            }
+        }
+
+        void SetSilverlightDefaultControlDefinition() {
+            if (this.IsNonBindingControl) {
+                this.LabelText = String.Empty;
+                this.BindingMode = BindingMode.Default;
+                return;
+            }
+
+            if (!CanWrite && this.TypeName != "ICommand") {
+                this.ControlDefinition = this.ControlDefinitions.First(x => x.ControlType == ControlType.SilverlightTextBlock);
+                return;
+            }
+
+            switch (this.TypeName) {
+                case "DateTime":
+                    this.ControlDefinition = this.ControlDefinitions.First(x => x.ControlType == ControlType.SilverlightDatePicker);
+                    this.BindingMode = BindingMode.TwoWay;
+                    break;
+                case "Boolean":
+                    this.ControlDefinition = this.ControlDefinitions.First(x => x.ControlType == ControlType.SilverlightCheckBox);
+                    this.BindingMode = BindingMode.TwoWay;
+                    break;
+                case "ICommand":
+                    this.ControlDefinition = this.ControlDefinitions.First(x => x.ControlType == ControlType.SilverlightButton);
+                    var buttonEditorProperties = (SL.ButtonEditorProperties)this.ControlSpecificProperties;
+                    buttonEditorProperties.Command = this.BindingPath;
+                    buttonEditorProperties.Content = this.BindingPath.Replace("Command", String.Empty);
+                    break;
+                default:
+                    this.ControlDefinition = this.ControlDefinitions.First(x => x.ControlType == ControlType.SilverlightTextBox);
+                    this.BindingMode = BindingMode.TwoWay;
                     break;
             }
         }
@@ -449,10 +526,6 @@
         void SetWpfControlSpecificPropertiesObject() {
             this.ShowStringFormatProperty = false;
 
-            //var labelText = this.LabelText;
-            //if (this.IsNonBindingControl) {
-            //    labelText = String.Empty;
-            //}
             switch (this.ControlDefinition.ControlType) {
                 case ControlType.WpfButton:
                     this.ControlSpecificProperties = new WF.ButtonEditorProperties();
@@ -489,7 +562,7 @@
 
         void SetWpfDefaultControlDefinition() {
             if (this.IsNonBindingControl) {
-                this.LabelText = "";
+                this.LabelText = String.Empty;
                 this.BindingMode = BindingMode.Default;
                 return;
             }

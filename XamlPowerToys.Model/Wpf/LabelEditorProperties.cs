@@ -22,7 +22,7 @@
         public String TemplateResourceKey { get; }
 
         public LabelEditorProperties() {
-            this.TemplateResourceKey = "xamarinFormsLabelEditorTemplate";
+            this.TemplateResourceKey = "wpfLabelEditorTemplate";
         }
 
         public IControlFactory Make(GenerateFormModel generateFormModel, PropertyInformationViewModel propertyInformationViewModel) {

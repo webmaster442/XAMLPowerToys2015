@@ -233,11 +233,6 @@
         </Button>
 
         <Grid Grid.Row="2">
-            <!--<Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="80" />
-            </Grid.RowDefinitions>-->
             <ListBox VerticalAlignment="Stretch" x:Name="lbPropertyInformationCollection" BorderThickness="1" BorderBrush="LightGray" Padding="3" Margin="3" HorizontalContentAlignment="Stretch" ItemsSource="{Binding Path=PropertyInformationCollection}" IsTabStop="False" dragDrop:DragDropHelper.IsDragSource="True" dragDrop:DragDropHelper.IsDropTarget="True" dragDrop:DragDropHelper.IsMasterListControl="True" dragDrop:DragDropHelper.DragDropTemplate="{StaticResource fieldsListDragDropDataTemplate}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
@@ -263,18 +258,6 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-
-            <!--<TextBlock Visibility="Collapsed" Grid.Row="1" FontWeight="Bold" Margin="5, 15,5,10" Text="Unbound Controls"/>
-
-            <ListBox Visibility="Collapsed" Grid.Row="2" ItemsSource="{Binding Path=NonBindingControlsCollection}" BorderThickness="1" BorderBrush="LightGray" Padding="3" Margin="3" HorizontalContentAlignment="Stretch" IsTabStop="False" dragDrop:DragDropHelper.IsDragSource="True" dragDrop:DragDropHelper.IsDropTarget="True" dragDrop:DragDropHelper.IsNonBindingControlsListControl="True" dragDrop:DragDropHelper.IsMasterListControl="False" dragDrop:DragDropHelper.DragDropTemplate="{StaticResource fieldsListDragDropDataTemplate}">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <TextBlock Text="{Binding Path=ControlDefinition.ShortName}" HorizontalAlignment="Left" ToolTip="Drag control to design surface add this control as a non-binding control."/>
-                        </Grid>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>-->
         </Grid>
 
         <GridSplitter Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" />
@@ -305,6 +288,7 @@
             <Grid.Resources>
                 <ResourceDictionary>
                     <ResourceDictionary.MergedDictionaries>
+                        <ResourceDictionary Source="Silverlight/SilverlightEditorsDictionary.xaml" />
                         <ResourceDictionary Source="XamarinForms/XamarinEditorsDictionary.xaml" />
                         <ResourceDictionary Source="Wpf/WpfEditorsDictionary.xaml" />
                         <ResourceDictionary Source="Uwp/UwpEditorsDictionary.xaml" />

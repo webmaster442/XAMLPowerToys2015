@@ -3,6 +3,7 @@
     using System.Collections;
     using System.Collections.Generic;
     using System.ComponentModel;
+    using System.Diagnostics;
     using System.IO;
     using System.Linq;
     using EnvDTE;
@@ -39,15 +40,15 @@
 
             var resolver = new DefaultAssemblyResolver();
             resolver.AddSearchDirectory(Path.GetDirectoryName(assemblyPath));
+            if (projectFrameworkType == ProjectType.Silverlight) {
+                resolver.AddSearchDirectory(@"C:\Program Files (x86)\Microsoft SDKs\Silverlight\v5.0\Libraries\Client");
+            }
             var reader = new ReaderParameters {AssemblyResolver = resolver};
 
             var classEntities = new ClassEntities();
             var sourceProjectPath = Path.GetDirectoryName(assemblyPath);
             var sourceAssemblyDefinition = AssemblyDefinition.ReadAssembly(assemblyPath, reader);
             var assembliesToLoad = new Hashtable();
-
-            //load the source assembly
-            //assembliesToLoad.Add(assemblyPath.ToLower(), String.Empty);
 
             //load up all referenced assemblies for above assemblyPath
             foreach (AssemblyNameReference assemblyReference in sourceAssemblyDefinition.MainModule.AssemblyReferences) {
@@ -70,6 +71,9 @@
             foreach (var asyPath in assembliesToLoad.Keys) {
                 var asyResolver = new DefaultAssemblyResolver();
                 asyResolver.AddSearchDirectory(Path.GetDirectoryName(assemblyPath));
+                if (projectFrameworkType == ProjectType.Silverlight) {
+                    resolver.AddSearchDirectory(@"C:\Program Files (x86)\Microsoft SDKs\Silverlight\v5.0\Libraries\Client");
+                }
                 var asyReader = new ReaderParameters {AssemblyResolver = asyResolver};
 
                 ReflectClasses(AssemblyDefinition.ReadAssembly(asyPath.ToString(), asyReader), projectFrameworkType, projectFrameworkVersion, classEntities, ActiveProject.No);
@@ -81,7 +85,7 @@
             var view = new SelectClassFromAssembliesView(classEntities, sourceCommandName, xamlFileClassName);
             var result = view.ShowDialog();
             if (result.HasValue && result.Value && view.SelectedClassEntity != null) {
-                LoadPropertyInformation(view.SelectedClassEntity.TypeDefinition, view.SelectedClassEntity, assembliesToLoad);
+                LoadPropertyInformation(view.SelectedClassEntity.TypeDefinition, view.SelectedClassEntity, assembliesToLoad, projectFrameworkType);
                 return new TypeReflectorResult(view.SelectedClassEntity, listOfConverters);
             }
 
@@ -130,7 +134,7 @@
             return sb.ToString();
         }
 
-        List<PropertyDefinition> GetAllPropertiesForType(TypeDefinition type, Hashtable loadedAssemblies) {
+        List<PropertyDefinition> GetAllPropertiesForType(TypeDefinition type, Hashtable loadedAssemblies, ProjectType projectFrameworkType) {
             var returnValue = new List<PropertyDefinition>();
             foreach (PropertyDefinition item in type.Properties) {
                 returnValue.Add(item);
@@ -165,6 +169,9 @@
                             // ReSharper restore AssignNullToNotNullAttribute
                             var resolver = new DefaultAssemblyResolver();
                             resolver.AddSearchDirectory(Path.GetDirectoryName(asyName.ToString()));
+                            if (projectFrameworkType == ProjectType.Silverlight) {
+                                resolver.AddSearchDirectory(@"C:\Program Files (x86)\Microsoft SDKs\Silverlight\v5.0\Libraries\Client");
+                            }
                             var reader = new ReaderParameters {AssemblyResolver = resolver};
 
                             asyTargetAssemblyDefinition = AssemblyDefinition.ReadAssembly(asyName.ToString(), reader);
@@ -175,7 +182,7 @@
                     if (asyTargetAssemblyDefinition != null) {
                         foreach (TypeDefinition baseTypeDefinition in asyTargetAssemblyDefinition.MainModule.Types) {
                             if (baseTypeDefinition.IsClass && baseTypeDefinition.Name == type.BaseType.Name) {
-                                returnValue.AddRange(GetAllPropertiesForType(baseTypeDefinition, loadedAssemblies));
+                                returnValue.AddRange(GetAllPropertiesForType(baseTypeDefinition, loadedAssemblies, projectFrameworkType));
                                 break;
                             }
                         }
@@ -217,13 +224,18 @@
             return typeName.Contains("Collection") || typeName.Contains("Enumerable");
         }
 
-        void LoadPropertyInformation(TypeDefinition typeDefinition, ClassEntity classEntity, Hashtable assembliesToLoad, String parentPropertyName = "") {
-            foreach (var property in GetAllPropertiesForType(typeDefinition, assembliesToLoad)) {
+        void LoadPropertyInformation(TypeDefinition typeDefinition, ClassEntity classEntity, Hashtable assembliesToLoad, ProjectType projectFrameworkType, String parentPropertyName = "") {
+            foreach (var property in GetAllPropertiesForType(typeDefinition, assembliesToLoad, projectFrameworkType)) {
                 TypeDefinition td = property.PropertyType as TypeDefinition;
                 if (td == null) {
                     var tr = property.PropertyType;
                     if (tr != null) {
-                        td = tr.Resolve();
+                        // Only Silverlight requires this try/catch.  
+                        try {
+                            td = tr.Resolve();
+                        } catch {
+                            Debug.WriteLine(property.Name); 
+                        }
                     }
                 }
 
@@ -272,7 +284,7 @@
                         var childTypeDefinition = td;
                         var childAssemblyDefinition = td.Module.Assembly;
                         pi.ClassEntity = new ClassEntity(childAssemblyDefinition, childTypeDefinition, classEntity.ProjectType, "");
-                        LoadPropertyInformation(childTypeDefinition, pi.ClassEntity, assembliesToLoad, pi.Name);
+                        LoadPropertyInformation(childTypeDefinition, pi.ClassEntity, assembliesToLoad, projectFrameworkType, pi.Name);
                     }
                 }
             }

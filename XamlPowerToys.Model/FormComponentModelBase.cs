@@ -89,7 +89,7 @@
                 this.ControlLayoutRoot = RootObject.Grid;
             }
 
-            // default these values to WPF & UWP
+            // default these values to WPF & UWP & Silverlight
             var widthName = "Width";
             var heightName = "Height";
             var horizontalAlignmentName = "HorizontalAlignment";
@@ -116,14 +116,16 @@
                             break;
                     }
                 }
-            } else if (generateFormModel.ProjectType == ProjectType.Wpf) {
+            } else if (generateFormModel.ProjectType == ProjectType.Wpf || generateFormModel.ProjectType == ProjectType.Silverlight) {
                 if (!viewModel.Width.HasValue) {
                     switch (viewModel.ControlDefinition.ControlType) {
                         case ControlType.WpfButton:
+                        case ControlType.SilverlightButton:
                             this.HorizontalAlignmentText = $"{horizontalAlignmentName}=\"Left\" ";
                             this.VerticalAlignmentText = $"{verticalAlignmentName}=\"Center\" ";
                             break;
                         case ControlType.WpfImage:
+                        case ControlType.SilverlightImage:
                             this.HorizontalAlignmentText = $"{horizontalAlignmentName}=\"Center\" ";
                             this.VerticalAlignmentText = $"{verticalAlignmentName}=\"Center\" ";
                             break;
