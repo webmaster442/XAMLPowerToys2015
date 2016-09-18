@@ -7,6 +7,7 @@
     using System.IO;
     using System.Linq;
     using EnvDTE;
+    using Microsoft.Win32;
     using Mono.Cecil;
     using VSLangProj;
     using XamlPowerToys.Infrastructure;
@@ -15,6 +16,11 @@
     using XamlPowerToys.UI.SelectClassFromAssemblies;
 
     public class TypeReflector {
+
+        String _silverlightAssembliesPath = String.Empty;
+
+        public TypeReflector() {
+        }
 
         public TypeReflectorResult SelectClassFromAllReferencedAssemblies(Project sourceProject, String xamlFileClassName, String sourceCommandName, ProjectType projectFrameworkType, String projectFrameworkVersion) {
             if (sourceProject == null) {
@@ -25,6 +31,10 @@
             }
             if (!Enum.IsDefined(typeof(ProjectType), projectFrameworkType)) {
                 throw new InvalidEnumArgumentException(nameof(projectFrameworkType), (int)projectFrameworkType, typeof(ProjectType));
+            }
+
+            if (projectFrameworkType == ProjectType.Silverlight) {
+                SetSilverlightInstallPath();
             }
 
             var assemblyPath = AssemblyAssistant.GetAssemblyPath(sourceProject);
@@ -41,7 +51,7 @@
             var resolver = new DefaultAssemblyResolver();
             resolver.AddSearchDirectory(Path.GetDirectoryName(assemblyPath));
             if (projectFrameworkType == ProjectType.Silverlight) {
-                resolver.AddSearchDirectory(@"C:\Program Files (x86)\Microsoft SDKs\Silverlight\v5.0\Libraries\Client");
+                resolver.AddSearchDirectory(_silverlightAssembliesPath);
             }
             var reader = new ReaderParameters {AssemblyResolver = resolver};
 
@@ -72,7 +82,7 @@
                 var asyResolver = new DefaultAssemblyResolver();
                 asyResolver.AddSearchDirectory(Path.GetDirectoryName(assemblyPath));
                 if (projectFrameworkType == ProjectType.Silverlight) {
-                    resolver.AddSearchDirectory(@"C:\Program Files (x86)\Microsoft SDKs\Silverlight\v5.0\Libraries\Client");
+                    resolver.AddSearchDirectory(_silverlightAssembliesPath);
                 }
                 var asyReader = new ReaderParameters {AssemblyResolver = asyResolver};
 
@@ -170,7 +180,7 @@
                             var resolver = new DefaultAssemblyResolver();
                             resolver.AddSearchDirectory(Path.GetDirectoryName(asyName.ToString()));
                             if (projectFrameworkType == ProjectType.Silverlight) {
-                                resolver.AddSearchDirectory(@"C:\Program Files (x86)\Microsoft SDKs\Silverlight\v5.0\Libraries\Client");
+                                resolver.AddSearchDirectory(_silverlightAssembliesPath);
                             }
                             var reader = new ReaderParameters {AssemblyResolver = resolver};
 
@@ -234,7 +244,7 @@
                         try {
                             td = tr.Resolve();
                         } catch {
-                            Debug.WriteLine(property.Name); 
+                            Debug.WriteLine(property.Name);
                         }
                     }
                 }
@@ -254,7 +264,6 @@
                         foreach (TypeReference genericTr in obj.GenericArguments) {
                             pi.GenericArguments.Add(genericTr.Name);
                             if (!genericTr.Namespace.Contains("System")) {
-
                                 TypeDefinition genericTd = genericTr as TypeDefinition;
                                 if (genericTd == null) {
                                     genericTd = genericTr.Resolve();
@@ -324,6 +333,41 @@
                         }
                     }
                 }
+            }
+        }
+
+        void SetSilverlightInstallPath() {
+            const String subKey = @"SOFTWARE\Microsoft\Microsoft SDKs\Silverlight\v5.0\Install Path";
+            const String installPath = "Install Path";
+
+            using (var view64 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64)) {
+                using (var key = view64.OpenSubKey(subKey)) {
+                    if (key != null) {
+                        var value = key.GetValue(installPath);
+                        _silverlightAssembliesPath = $"{value}Libraries\\Client";
+                        key.Close();
+                    }
+                }
+                view64.Close();
+            }
+
+            if (!String.IsNullOrWhiteSpace(_silverlightAssembliesPath)) {
+                return;
+            }
+
+            using (var view32 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32)) {
+                using (var key = view32.OpenSubKey(subKey)) {
+                    if (key != null) {
+                        var value = key.GetValue(installPath);
+                        _silverlightAssembliesPath = $"{value}Libraries\\Client";
+                        key.Close();
+                    }
+                }
+                view32.Close();
+            }
+
+            if (String.IsNullOrWhiteSpace(_silverlightAssembliesPath)) {
+                throw new Exception($"Unable to get Silverlight 5 install path from the registery.");
             }
         }
 

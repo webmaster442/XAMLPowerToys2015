@@ -10,7 +10,7 @@ download in the
 
 These are the changes to each version that has been released on the official Visual Studio extension gallery.
 
-## 1.3.18
+## 1.3.20
 
 **2016-09-18**
 
