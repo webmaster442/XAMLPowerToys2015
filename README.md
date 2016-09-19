@@ -175,9 +175,9 @@ This form's Column Root Object is a Table View.  Table views group controls in s
 
 **BindablePicker**
 
-The BindablePicker control is one I created and blogged about [here](https://oceanware.wordpress.com/2016/06/13/xamarin-forms-bindable-picker/)
+The BindablePicker control is one I created and blogged about [here](https://oceanware.wordpress.com/2016/08/12/xamarin-forms-bindable-picker-v2/)
 
-You can also get it in the XAML Power Toys Demo repro [here](https://github.com/Oceanware/XamlPowerToysDemo)
+You can also get it and see many examples in the Xamarin Forms Bindable Picker repo [here](https://github.com/Oceanware/XamarinFormsBindablePicker)
 
 You can see two of the supported scenarios:  
 

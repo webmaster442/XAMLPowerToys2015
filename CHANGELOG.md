@@ -10,6 +10,12 @@ download in the
 
 These are the changes to each version that has been released on the official Visual Studio extension gallery.
 
+## 1.3.21
+
+**2016-09-19**
+
+- [x] If not ItemsSource is selected for ComboBox's or the BindablePicker, the code generator will still bind to SelectedItem.
+
 ## 1.3.20
 
 **2016-09-18**
