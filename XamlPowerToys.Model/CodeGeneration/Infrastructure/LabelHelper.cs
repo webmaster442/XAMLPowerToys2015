@@ -15,16 +15,16 @@
             if (String.IsNullOrWhiteSpace(text)) {
                 return String.Empty;
             }
-
+            var escapedText = System.Security.SecurityElement.Escape(text);
             var sb = new StringBuilder();
 
             if (String.IsNullOrWhiteSpace(lableImageName)) {
                 if (_projectType == ProjectType.Xamarin) {
-                    sb.Append($"<Label Text=\"{text}\" ");
+                    sb.Append($"<Label Text=\"{escapedText}\" ");
                 } else if (_projectType == ProjectType.Uwp || _projectType == ProjectType.Silverlight) {
-                    sb.Append($"<TextBlock Text=\"{text}\" ");
+                    sb.Append($"<TextBlock Text=\"{escapedText}\" ");
                 } else {
-                    sb.Append($"<Label Content=\"{text}\" ");
+                    sb.Append($"<Label Content=\"{escapedText}\" ");
                 }
             } else {
                 sb.Append($"<Image Source=\"{lableImageName}\" ");

@@ -142,6 +142,7 @@
     <Compile Include="PropertyParameter.cs" />
     <Compile Include="ControlTemplateModel.cs" />
     <Compile Include="RootObject.cs" />
+    <Compile Include="SelectedAction.cs" />
     <Compile Include="SelectorBase.cs" />
     <Compile Include="Silverlight\ButtonEditorProperties.cs" />
     <Compile Include="Silverlight\CheckBoxEditorProperties.cs" />

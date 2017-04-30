@@ -1,7 +1,5 @@
 ﻿namespace XamlPowerToys.Model.CodeGeneration {
     using System;
-    using System.Windows;
-    using System.Windows.Controls;
 
     public class UIGeneration {
 

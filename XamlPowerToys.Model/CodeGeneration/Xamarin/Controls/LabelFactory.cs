@@ -24,7 +24,7 @@
             if (!_model.IsNonBindingControl && !String.IsNullOrWhiteSpace(_model.BindingPath)) {
                 sb.AppendFormat("Text=\"{0}\" ", Helpers.ConstructBinding(_model.BindingPath, BindingMode.OneWay, _model.StringFormatText, _model.BindingConverter));
             } else if (_model.IsNonBindingControl && !String.IsNullOrWhiteSpace(_model.EditorProperties.LabelText)) {
-                sb.Append($"Text=\"{_model.EditorProperties.LabelText}\" ");
+                sb.Append($"Text=\"{System.Security.SecurityElement.Escape(_model.EditorProperties.LabelText)}\" ");
             }
 
             if (parentGridColumn != null) {

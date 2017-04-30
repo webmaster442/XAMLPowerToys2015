@@ -12,11 +12,12 @@
         }
 
         public String MakeTag(String text, Int32? parentGridColumn = null, Int32? parentGridRow = null) {
+            var escapedText = System.Security.SecurityElement.Escape(text);
             var sb = new StringBuilder();
             if (_projectType == ProjectType.Xamarin) {
-                sb.Append($"<Label Text=\"{text}\" ");
+                sb.Append($"<Label Text=\"{escapedText}\" ");
             } else {
-                sb.Append($"<TextBlock Text=\"{text}\" ");
+                sb.Append($"<TextBlock Text=\"{escapedText}\" ");
             }
             if (parentGridColumn != null) {
                 sb.Append($"Grid.Column=\"{parentGridColumn.Value}\" ");

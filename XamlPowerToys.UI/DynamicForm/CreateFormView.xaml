@@ -128,10 +128,6 @@
         </Style>
         <SolidColorBrush x:Key="Item.MouseOver.Background" Color="#50F7FDFF" />
         <SolidColorBrush x:Key="Item.MouseOver.Border" Color="#a826A0Da" />
-        <!--<SolidColorBrush x:Key="Item.SelectedInactive.Background" Color="Transparent"/>
-        <SolidColorBrush x:Key="Item.SelectedInactive.Border" Color="Transparent"/>
-        <SolidColorBrush x:Key="Item.SelectedActive.Background" Color="Transparent"/>
-        <SolidColorBrush x:Key="Item.SelectedActive.Border" Color="Transparent"/>-->
         <Style TargetType="{x:Type ListBoxItem}">
             <Setter Property="IsTabStop" Value="False" />
             <Setter Property="SnapsToDevicePixels" Value="True" />
@@ -156,22 +152,6 @@
                                 <Setter Property="Background" TargetName="Bd" Value="{StaticResource Item.MouseOver.Background}" />
                                 <Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource Item.MouseOver.Border}" />
                             </MultiTrigger>
-                            <!--<MultiTrigger>
-                                <MultiTrigger.Conditions>
-                                    <Condition Property="Selector.IsSelectionActive" Value="False"/>
-                                    <Condition Property="IsSelected" Value="True"/>
-                                </MultiTrigger.Conditions>
-                                <Setter Property="Background" TargetName="Bd" Value="{StaticResource Item.SelectedInactive.Background}"/>
-                                <Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource Item.SelectedInactive.Border}"/>
-                            </MultiTrigger>
-                            <MultiTrigger>
-                                <MultiTrigger.Conditions>
-                                    <Condition Property="Selector.IsSelectionActive" Value="True"/>
-                                    <Condition Property="IsSelected" Value="True"/>
-                                </MultiTrigger.Conditions>
-                                <Setter Property="Background" TargetName="Bd" Value="{StaticResource Item.SelectedActive.Background}"/>
-                                <Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource Item.SelectedActive.Border}"/>
-                            </MultiTrigger>-->
                             <Trigger Property="IsEnabled" Value="False">
                                 <Setter Property="TextElement.Foreground" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
                             </Trigger>
@@ -272,9 +252,9 @@
 
             <CheckBox Margin="20,0,0,0" IsChecked="{Binding Path=ShowExpandAdvancedOptions, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Content="Show Advanced Options" />
 
-            <Label Margin="20,0,5,0" HorizontalAlignment="Left" Content="Column Groups" Visibility="{Binding Path=ShowColumnGroupControls, Converter={StaticResource booleanToVisibilityConverter}}" />
+            <Label Margin="20,0,5,0" HorizontalAlignment="Left" Content="Column Groups" />
 
-            <TextBox x:Name="txtColumnCount" Text="{Binding Path=NumberOfColumns, Mode=TwoWay}" KeyDown="TxtColumnCount_OnKeyDown" MaxLength="1" Margin="0,5,10,0" Width="35"  Visibility="{Binding Path=ShowColumnGroupControls, Converter={StaticResource booleanToVisibilityConverter}}" />
+            <TextBox x:Name="txtColumnCount" Text="{Binding Path=NumberOfColumns, Mode=TwoWay}" KeyDown="TxtColumnCount_OnKeyDown" MaxLength="1" Margin="0,5,10,0" Width="35" />
 
             <StackPanel Visibility="{Binding Path=GenerateFormModel.UiIsXamarinForms, Converter={StaticResource booleanToVisibilityConverter}}" Margin="20,0,0,0" Orientation="Horizontal" VerticalAlignment="Center">
                 <TextBlock Text="Column Root Object" />
@@ -340,6 +320,29 @@
             <StackPanel Orientation="Horizontal" Margin="10" Grid.Row="7" HorizontalAlignment="Right" VerticalAlignment="Center">
                 <Button x:Name="btnGenerateUI" Click="BtnGenerateUI_OnClick" HorizontalAlignment="Right" Margin="0,0,10,0" VerticalAlignment="Center" Padding="6">
                     <AccessText>_Generate UI</AccessText>
+                </Button>
+                <Button
+                    ToolTipService.ShowDuration="20000"
+                    x:Name="btnApplyUI"
+                    Click="BtnApplyUI_OnClick"
+                    HorizontalAlignment="Right"
+                    Margin="0,0,10,0"
+                    VerticalAlignment="Center"
+                    Padding="6">
+                    <AccessText>_Apply UI</AccessText>
+                    <Button.ToolTip>
+                        <StackPanel>
+                            <TextBlock Text="Apply UI" FontWeight="Bold"/>
+                            <TextBlock>
+                                <Run>Creates a saves the XAML Form but does not close XAML Power Toys</Run>
+                                <LineBreak/>
+                                <LineBreak />
+                                <Run>You need to open the Visual Studio Window, </Run><Run FontWeight="Bold">Xamarin.Forms Previewer</Run>
+                                <LineBreak />
+                                <Run> to preview your form without running the application.</Run>
+                            </TextBlock>
+                        </StackPanel>
+                    </Button.ToolTip>
                 </Button>
                 <Button Command="{Binding Path=BackCommand}" HorizontalAlignment="Right" Margin="0,0,10,0" VerticalAlignment="Center" Padding="6">
                     <AccessText>_Back</AccessText>

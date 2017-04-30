@@ -11,6 +11,7 @@
 
     public class CreateFormViewModel : ObservableObject {
 
+        readonly Action<String> _applyAction;
         ICommand _backCommand;
         Boolean _childClassEntityInView;
         ClassEntity _classEntity;
@@ -135,6 +136,8 @@
             }
         }
 
+        public SelectedAction SelectedAction { get; private set; } = SelectedAction.None;
+
         public CreateObjectDefinition SelectedCreateObjectDefinition {
             get { return _selectedCreateObjectDefinition; }
             set {
@@ -142,8 +145,6 @@
                 RaisePropertyChanged();
             }
         }
-
-        public Boolean ShowColumnGroupControls { get; }
 
         public Boolean ShowExpandAdvancedOptions {
             get { return _showExpandAdvancedOptions; }
@@ -181,33 +182,32 @@
 
         public IEnumerable<String> WpfTickPlacements { get; }
 
-        public CreateFormViewModel(ClassEntity classEntity, IEnumerable<String> availableConverters) {
+        public CreateFormViewModel(ClassEntity classEntity, IEnumerable<String> availableConverters, Action<String> applyAction) {
             if (classEntity == null) {
                 throw new ArgumentNullException(nameof(classEntity));
+            }
+            if (applyAction == null) {
+                throw new ArgumentNullException(nameof(applyAction));
             }
 
             this.ClassEntity = classEntity;
             _projectTypeName = classEntity.ProjectType.ToString();
+            _applyAction = applyAction;
 
             switch (classEntity.ProjectType) {
                 case ProjectType.Wpf:
                     this.FormIconImageSource = "../Images/wpfLogo.png";
-                    this.ShowColumnGroupControls = true;
                     break;
                 case ProjectType.Xamarin:
                     this.FormIconImageSource = "../Images/xamarinLogo.png";
-                    this.ShowColumnGroupControls = false;
                     this.IsXamarinFormsProject = true;
                     break;
                 case ProjectType.Uwp:
                     this.FormIconImageSource = "../Images/uwpLogo.png";
-                    this.ShowColumnGroupControls = true;
                     break;
                 case ProjectType.Silverlight:
                     this.FormIconImageSource = "../Images/silverlightLogo.png";
-                    this.ShowColumnGroupControls = true;
                     break;
-
             }
 
             classEntity.PropertyInformationCollection.Sort();
@@ -225,10 +225,14 @@
             this.WpfTickPlacements = GetWpfTickPlacements();
         }
 
-        public void GenerateUI(IList<PropertyInformationViewModel> columnZeroItems, IList<PropertyInformationViewModel> columnOneItems = null, IList<PropertyInformationViewModel> columnTwoItems = null) {
+        public void GenerateUI(SelectedAction selectedAction, IList<PropertyInformationViewModel> columnZeroItems, IList<PropertyInformationViewModel> columnOneItems = null, IList<PropertyInformationViewModel> columnTwoItems = null) {
             if (columnZeroItems == null) {
                 throw new ArgumentNullException(nameof(columnZeroItems));
             }
+
+            this.ResultXaml = String.Empty;
+
+            this.SelectedAction = selectedAction;
 
             this.IsUIGenerationInProgress = true;
 
@@ -250,15 +254,23 @@
                 var xaml = codeGenerator.Generate(this.GenerateFormModel).Trim();
                 if (!String.IsNullOrWhiteSpace(xaml)) {
                     this.ResultXaml = xaml;
-                    this.RaiseCloseWindow();
+                    if (selectedAction == SelectedAction.Generate) {
+                        this.RaiseCloseWindow();
+                    } else if (selectedAction == SelectedAction.Apply) {
+                        _applyAction(this.ResultXaml);
+                        this.SelectedAction = SelectedAction.None;
+                    }
                 } else {
                     MessageBox.Show("No XAML was returned by the UI Code Generator.", "UI Code Generation Failed", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             } catch (NotImplementedException ex) {
+                this.SelectedAction = SelectedAction.None;
                 MessageBox.Show(ex.ToString(), "Programmer Error", MessageBoxButton.OK, MessageBoxImage.Error);
             } catch (InvalidOperationException ex) {
+                this.SelectedAction = SelectedAction.None;
                 MessageBox.Show(ex.ToString(), "Compiler Error", MessageBoxButton.OK, MessageBoxImage.Error);
             } catch (Exception ex) {
+                this.SelectedAction = SelectedAction.None;
                 MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             this.IsUIGenerationInProgress = false;

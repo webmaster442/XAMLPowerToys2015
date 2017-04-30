@@ -3,7 +3,9 @@
     using System.ComponentModel.Design;
     using EnvDTE;
     using EnvDTE80;
+    using Microsoft.VisualStudio.CommandBars;
     using Microsoft.VisualStudio.Shell;
+    using Microsoft.VisualStudio.Shell.Interop;
     using XamlPowerToys.Commands;
     using XamlPowerToys.Infrastructure;
     using XamlPowerToys.Model;
@@ -46,9 +48,9 @@
             // gets called from a XAML file being edited by the WPF Designer editor.
             var result = AssemblyAssistant.GetProjectType(this.Dte2.ActiveDocument.ActiveWindow.Project);
             var cmd = (OleMenuCommand)sender;
-
             // future proofing when Visual Studio changes the editor for Xamarin
             cmd.Visible = result == ProjectType.Wpf || result == ProjectType.Xamarin || result == ProjectType.Uwp || result == ProjectType.Silverlight;
+
         }
 
         void MenuItemCallback(Object sender, EventArgs e) {

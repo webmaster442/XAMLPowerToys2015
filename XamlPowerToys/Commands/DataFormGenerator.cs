@@ -15,6 +15,7 @@
         readonly DTE2 _dte2;
         readonly String _projectFrameworkVersion;
         readonly ProjectType _projectType;
+        Boolean _hasBeenApplied = false;
 
         public DataFormGenerator(DTE2 dte2, Project activeProject) {
             _dte2 = dte2;
@@ -36,18 +37,33 @@
                 var typeReflectorResult = typeReflector.SelectClassFromAllReferencedAssemblies(_activeProject, xamlFileClassName, "Data Form Generator", _projectType, _projectFrameworkVersion);
                 if (typeReflectorResult != null) {
                     var win = new XamlPowerToysWindow();
-                    var vm = new CreateFormViewModel(typeReflectorResult.ClassEntity, typeReflectorResult.AvailableConverters);
+                    var vm = new CreateFormViewModel(typeReflectorResult.ClassEntity, typeReflectorResult.AvailableConverters, ApplyChanges);
                     var view = new CreateFormView();
                     win.DataContext = vm;
                     win.rootGrid.Children.Add(view);
                     win.ShowDialog();
-                    var ts = (TextSelection)_dte2.ActiveDocument.Selection;
-                    ts.Insert(vm.ResultXaml);
-                    _dte2.ExecuteCommand("Edit.FormatDocument");
+                    if (vm.SelectedAction == SelectedAction.Generate) {
+                        InsertXaml(vm.ResultXaml);
+                    }
                 }
             } catch (Exception ex) {
                 DialogAssistant.ShowExceptionMessage(ex);
             }
+        }
+
+        void ApplyChanges(String xaml) {
+            InsertXaml(xaml);
+            _hasBeenApplied = true;
+        }
+
+        void InsertXaml(String xaml) {
+            if (_hasBeenApplied) {
+                _dte2.ExecuteCommand("Edit.Undo");
+                _dte2.ExecuteCommand("Edit.Undo");
+            }
+            var ts = (TextSelection)_dte2.ActiveDocument.Selection;
+            ts.Insert(xaml);
+            _dte2.ExecuteCommand("Edit.FormatDocument");
         }
 
     }

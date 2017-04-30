@@ -1,4 +1,4 @@
-# XAML Power Toys for Visual Studio 2015
+# XAML Power Toys for Visual Studio 2015 - 2017
 
 [![Build status](https://ci.appveyor.com/api/projects/status/ns2n4aew6xx5txfd?svg=true)](https://ci.appveyor.com/project/kdawg1406/xamlpowertoys2015)
 
@@ -7,7 +7,7 @@ or get the [CI build](http://vsixgallery.com/extension/d01c1624-8838-4097-bf77-f
 
 ---------------------------------------
 
-Visual Studio 2015 extension that enables developers to rapidly generate data entry forms from view models or entity objects for Xamarin Forms, UWP, WPF, and **Silverlight**.
+Visual Studio 2015 - 2017 extension that enables developers to rapidly generate data entry forms from view models or entity objects for Xamarin Forms, UWP, WPF, and **Silverlight**.
 
 See the [changelog](CHANGELOG.md) for changes and roadmap.
 

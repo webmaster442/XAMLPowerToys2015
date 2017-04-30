@@ -18,6 +18,7 @@
             XamarinXamlPowerToysCommand.Initialize(this);
             XamlPowerToysCommand.Initialize(this);
             base.Initialize();
+
         }
 
     }

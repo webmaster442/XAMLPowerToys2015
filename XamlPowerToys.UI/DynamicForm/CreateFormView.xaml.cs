@@ -35,38 +35,16 @@
             }
         }
 
+        void BtnApplyUI_OnClick(Object sender, RoutedEventArgs e) {
+            GenerateUI(SelectedAction.Apply);
+        }
+
         void BtnCancel_OnClick(Object sender, RoutedEventArgs e) {
             Close();
         }
 
         void BtnGenerateUI_OnClick(Object sender, RoutedEventArgs e) {
-            var listBoxes = new List<ListBox>();
-            foreach (var child in this.gridColumnGroupsContainer.Children) {
-                if (child is ListBox) {
-                    listBoxes.Add((ListBox)child);
-                }
-            }
-
-            List<PropertyInformationViewModel> columnZeroItems = null;
-            List<PropertyInformationViewModel> columnOneItems = null;
-            List<PropertyInformationViewModel> columnTwoItems = null;
-
-            if (listBoxes.Count > 0) {
-                columnZeroItems = listBoxes[0].Items.OfType<PropertyInformationViewModel>().ToList();
-            }
-            if (listBoxes.Count > 1) {
-                columnOneItems = listBoxes[1].Items.OfType<PropertyInformationViewModel>().ToList();
-            }
-            if (listBoxes.Count > 2) {
-                columnTwoItems = listBoxes[2].Items.OfType<PropertyInformationViewModel>().ToList();
-            }
-
-            if (columnZeroItems == null || columnZeroItems.Count == 0) {
-                MessageBox.Show("You need to add at least one control to the design surface.", "No Data", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-
-            _viewModel.GenerateUI(columnZeroItems, columnOneItems, columnTwoItems);
+            GenerateUI(SelectedAction.Generate);
         }
 
         void Close() {
@@ -91,6 +69,38 @@
             _viewModel.CloseWindow += CloseWindow;
             ConfigureColumnGroups(1);
             Keyboard.Focus(this);
+            this.btnApplyUI.Visibility = _viewModel.IsXamarinFormsProject ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        void GenerateUI(SelectedAction selectedAction) {
+            var listBoxes = new List<ListBox>();
+            foreach (var child in this.gridColumnGroupsContainer.Children) {
+                var listBox = child as ListBox;
+                if (listBox != null) {
+                    listBoxes.Add(listBox);
+                }
+            }
+
+            List<PropertyInformationViewModel> columnZeroItems = null;
+            List<PropertyInformationViewModel> columnOneItems = null;
+            List<PropertyInformationViewModel> columnTwoItems = null;
+
+            if (listBoxes.Count > 0) {
+                columnZeroItems = listBoxes[0].Items.OfType<PropertyInformationViewModel>().ToList();
+            }
+            if (listBoxes.Count > 1) {
+                columnOneItems = listBoxes[1].Items.OfType<PropertyInformationViewModel>().ToList();
+            }
+            if (listBoxes.Count > 2) {
+                columnTwoItems = listBoxes[2].Items.OfType<PropertyInformationViewModel>().ToList();
+            }
+
+            if (columnZeroItems == null || columnZeroItems.Count == 0) {
+                MessageBox.Show("You need to add at least one control to the design surface.", "No Data", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            _viewModel.GenerateUI(selectedAction, columnZeroItems, columnOneItems, columnTwoItems);
         }
 
         GridSplitter GridSplitterFactory(Int32 gridColumnIndex) {
@@ -152,7 +162,7 @@
             _currentColumnGroupCount = requestedColumnGroupCount;
         }
 
-        void TextBoxGotFocus(object sender, RoutedEventArgs e) {
+        void TextBoxGotFocus(Object sender, RoutedEventArgs e) {
             var tb = (TextBox)sender;
             tb.SelectAll();
         }

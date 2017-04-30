@@ -27,7 +27,7 @@
                 throw new ArgumentNullException(nameof(sourceProject));
             }
             if (string.IsNullOrWhiteSpace(sourceCommandName)) {
-                throw new ArgumentException("Value cannot be null or whitespace.", nameof(sourceCommandName));
+                throw new ArgumentException("Value cannot be null or white space.", nameof(sourceCommandName));
             }
             if (!Enum.IsDefined(typeof(ProjectType), projectFrameworkType)) {
                 throw new InvalidEnumArgumentException(nameof(projectFrameworkType), (int)projectFrameworkType, typeof(ProjectType));
@@ -310,7 +310,7 @@
                 throw new InvalidEnumArgumentException(nameof(projectFrameworkType), (int)projectFrameworkType, typeof(ProjectType));
             }
             if (string.IsNullOrWhiteSpace(projectFrameworkVersion)) {
-                throw new ArgumentException("Value cannot be null or whitespace.", nameof(projectFrameworkVersion));
+                throw new ArgumentException("Value cannot be null or white space.", nameof(projectFrameworkVersion));
             }
             if (!Enum.IsDefined(typeof(ActiveProject), activeProject)) {
                 throw new InvalidEnumArgumentException(nameof(activeProject), (int)activeProject, typeof(ActiveProject));
@@ -367,7 +367,7 @@
             }
 
             if (String.IsNullOrWhiteSpace(_silverlightAssembliesPath)) {
-                throw new Exception($"Unable to get Silverlight 5 install path from the registery.");
+                throw new Exception("Unable to get Silverlight 5 install path from the registery.");
             }
         }
 
