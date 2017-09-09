@@ -43,7 +43,7 @@
             this.tvObjects.SelectedItemChanged += tvObjects_SelectedItemChanged;
             this.lbViewModels.SelectionChanged += LbViewModels_SelectionChanged;
 
-            this.lbViewModels.ItemsSource = classEntities.Where(x => x.ClassName.ToLower().EndsWith("viewmodel")).OrderBy(x => x.ClassName).ToList();
+            this.lbViewModels.ItemsSource = classEntities.Where(x => x.ClassName.ToLower().EndsWith("viewmodel") || x.ClassName.ToLower().EndsWith("pagemodel")).OrderBy(x => x.ClassName).ToList();
             foreach (ClassEntity item in this.lbViewModels.Items) {
                 if (item.ClassName.StartsWith(xamlFileClassName)) {
                     this.lbViewModels.SelectedItem = item;

@@ -10,6 +10,10 @@ download in the
 
 These are the changes to each version that has been released on the official Visual Studio extension gallery.
 
+## 1.5.1
+
+- [x] Added customer requested feature to list ViewModel's where the case insensitive class name ends with "viewmodel" or "pagemodel".
+
 ## 1.5
 
 - [x] Updated for Visual Studio 2017.
