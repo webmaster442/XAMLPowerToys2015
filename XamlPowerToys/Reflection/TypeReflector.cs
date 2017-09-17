@@ -263,14 +263,18 @@
                     if (obj.HasGenericArguments) {
                         foreach (TypeReference genericTr in obj.GenericArguments) {
                             pi.GenericArguments.Add(genericTr.Name);
-                            if (!genericTr.Namespace.Contains("System")) {
-                                TypeDefinition genericTd = genericTr as TypeDefinition;
-                                if (genericTd == null) {
-                                    genericTd = genericTr.Resolve();
+                            if (!genericTr.Namespace.Contains("System") && !genericTr.Namespace.Contains("Xamarin.")) {
+                                if (!(genericTr is TypeDefinition genericTd)) {
+                                    try {
+                                        genericTd = genericTr.Resolve();
+                                    } catch {
+                                        Debug.WriteLine(genericTr.Name);
+                                        continue;
+                                    }
                                 }
 
                                 if (genericTd != null) {
-                                    if (genericTd.HasProperties && genericTd.IsPublic && genericTd.IsClass && !genericTd.IsAbstract && !genericTd.Namespace.Contains("System")) {
+                                    if (genericTd.HasProperties && genericTd.IsPublic && genericTd.IsClass && !genericTd.IsAbstract && !genericTd.Namespace.Contains("System") && !genericTd.Namespace.Contains("Xamarin.")) {
                                         foreach (var prop in genericTd.Properties) {
                                             pi.GenericCollectionClassPropertyNames.Add(prop.Name);
                                         }
@@ -289,7 +293,7 @@
                 classEntity.PropertyInformationCollection.Add(pi);
 
                 if (td != null) {
-                    if (td.HasProperties && td.IsPublic && td.IsClass && !td.IsAbstract && !td.Namespace.Contains("System")) {
+                    if (td.HasProperties && td.IsPublic && td.IsClass && !td.IsAbstract && !td.Namespace.Contains("System") && !td.Namespace.Contains("Xamarin.")) {
                         var childTypeDefinition = td;
                         var childAssemblyDefinition = td.Module.Assembly;
                         pi.ClassEntity = new ClassEntity(childAssemblyDefinition, childTypeDefinition, classEntity.ProjectType, "");

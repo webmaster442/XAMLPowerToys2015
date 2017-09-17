@@ -10,6 +10,11 @@ download in the
 
 These are the changes to each version that has been released on the official Visual Studio extension gallery.
 
+## 1.5.24
+
+- [x] Exclued Xamarin types from reflection.  One customer's system kept throwing on these.
+
+
 ## 1.5.1
 
 - [x] Added customer requested feature to list ViewModel's where the case insensitive class name ends with "viewmodel" or "pagemodel".
