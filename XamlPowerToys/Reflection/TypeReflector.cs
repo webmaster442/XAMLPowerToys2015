@@ -264,7 +264,8 @@
                         foreach (TypeReference genericTr in obj.GenericArguments) {
                             pi.GenericArguments.Add(genericTr.Name);
                             if (!genericTr.Namespace.Contains("System") && !genericTr.Namespace.Contains("Xamarin.")) {
-                                if (!(genericTr is TypeDefinition genericTd)) {
+                                var genericTd = genericTr as TypeDefinition;
+                                if (genericTd == null) {
                                     try {
                                         genericTd = genericTr.Resolve();
                                     } catch {
@@ -272,7 +273,7 @@
                                         continue;
                                     }
                                 }
-
+                                
                                 if (genericTd != null) {
                                     if (genericTd.HasProperties && genericTd.IsPublic && genericTd.IsClass && !genericTd.IsAbstract && !genericTd.Namespace.Contains("System") && !genericTd.Namespace.Contains("Xamarin.")) {
                                         foreach (var prop in genericTd.Properties) {
