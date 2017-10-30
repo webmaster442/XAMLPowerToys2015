@@ -1,5 +1,6 @@
 ﻿namespace XamlPowerToys.Infrastructure {
     using System;
+    using System.Globalization;
     using System.IO;
     using System.Runtime.InteropServices;
     using EnvDTE;

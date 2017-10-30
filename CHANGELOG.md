@@ -10,6 +10,11 @@ download in the
 
 These are the changes to each version that has been released on the official Visual Studio extension gallery.
 
+## 1.5.26
+
+- [x] Added CultureInfo.InvariantCulture argument to ToLower() on file names.
+
+
 ## 1.5.25
 
 - [x] Exclued Xamarin types from reflection.  One customer's system kept throwing on these.

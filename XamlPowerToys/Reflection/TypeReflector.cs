@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Diagnostics;
+    using System.Globalization;
     using System.IO;
     using System.Linq;
     using EnvDTE;
@@ -64,8 +65,8 @@
             foreach (AssemblyNameReference assemblyReference in sourceAssemblyDefinition.MainModule.AssemblyReferences) {
                 if (!AssemblyAssistant.SkipLoadingAssembly(assemblyReference.Name)) {
                     var assemblyFullPath = GetAssemblyFullPath(sourceProjectPath, assemblyReference.Name);
-                    if (!String.IsNullOrWhiteSpace(assemblyFullPath) && !assembliesToLoad.ContainsKey(assemblyFullPath.ToLower())) {
-                        assembliesToLoad.Add(assemblyFullPath.ToLower(), String.Empty);
+                    if (!String.IsNullOrWhiteSpace(assemblyFullPath) && !assembliesToLoad.ContainsKey(assemblyFullPath.ToLower(CultureInfo.InvariantCulture))) {
+                        assembliesToLoad.Add(assemblyFullPath.ToLower(CultureInfo.InvariantCulture), String.Empty);
                     }
                 }
             }
@@ -154,8 +155,7 @@
                 String baseTypeAssemblyName = null;
 
                 var td = type.BaseType as TypeDefinition;
-                var md = td?.Scope as ModuleDefinition;
-                if (md != null) {
+                if (td?.Scope is ModuleDefinition md) {
                     // when base type is in the types assembly
                     if (md.Name == type.Module.Name) {
                         return returnValue;
@@ -164,8 +164,7 @@
                 }
 
                 if (baseTypeAssemblyName == null) {
-                    var anr = type.BaseType.Scope as AssemblyNameReference;
-                    if (anr != null) {
+                    if (type.BaseType.Scope is AssemblyNameReference anr) {
                         baseTypeAssemblyName = anr.Name.ToLower();
                     }
                 }
