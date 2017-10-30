@@ -155,7 +155,8 @@
                 String baseTypeAssemblyName = null;
 
                 var td = type.BaseType as TypeDefinition;
-                if (td?.Scope is ModuleDefinition md) {
+                var md = td?.Scope as ModuleDefinition;
+                if (md != null) {
                     // when base type is in the types assembly
                     if (md.Name == type.Module.Name) {
                         return returnValue;
@@ -164,7 +165,8 @@
                 }
 
                 if (baseTypeAssemblyName == null) {
-                    if (type.BaseType.Scope is AssemblyNameReference anr) {
+                    var anr = type.BaseType.Scope as AssemblyNameReference;
+                    if (anr != null) {
                         baseTypeAssemblyName = anr.Name.ToLower();
                     }
                 }
