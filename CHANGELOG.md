@@ -8,6 +8,10 @@ download in the
 
 # Changelog
 
+## 1.5.27
+
+- [x] Corrected generated code when field was from a deeply nested class structure.  Example:  Order.Customer.FirstName or Order.Customer.Address.StreetName, these are all now generated correctly.
+
 These are the changes to each version that has been released on the official Visual Studio extension gallery.
 
 ## 1.5.26
