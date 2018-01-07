@@ -74,7 +74,7 @@
             //load up all assemblies referenced in the project but that are not loaded yet.
             foreach (var projectReference in GetProjectReferences(sourceProject)) {
                 if (!assembliesToLoad.ContainsKey(projectReference)) {
-                    assembliesToLoad.Add(projectReference.ToLower(), String.Empty);
+                    assembliesToLoad.Add(projectReference.ToLower(CultureInfo.InvariantCulture), String.Empty);
                 }
             }
 
@@ -91,7 +91,7 @@
             }
 
             var listOfConverters = new List<String>();
-            listOfConverters.AddRange(classEntities.Where(x => x.ClassName.ToLower().EndsWith("converter")).Select(n => n.ClassName).ToList());
+            listOfConverters.AddRange(classEntities.Where(x => x.ClassName.ToLower(CultureInfo.InvariantCulture).EndsWith("converter")).Select(n => n.ClassName).ToList());
 
             var view = new SelectClassFromAssembliesView(classEntities, sourceCommandName, xamlFileClassName);
             var result = view.ShowDialog();
@@ -161,13 +161,13 @@
                     if (md.Name == type.Module.Name) {
                         return returnValue;
                     }
-                    baseTypeAssemblyName = md.Name.ToLower();
+                    baseTypeAssemblyName = md.Name.ToLower(CultureInfo.InvariantCulture);
                 }
 
                 if (baseTypeAssemblyName == null) {
                     var anr = type.BaseType.Scope as AssemblyNameReference;
                     if (anr != null) {
-                        baseTypeAssemblyName = anr.Name.ToLower();
+                        baseTypeAssemblyName = anr.Name.ToLower(CultureInfo.InvariantCulture);
                     }
                 }
 

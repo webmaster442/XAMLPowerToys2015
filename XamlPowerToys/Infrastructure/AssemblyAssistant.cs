@@ -1,5 +1,7 @@
 ﻿namespace XamlPowerToys.Infrastructure {
     using System;
+    using System.Globalization;
+
     //using System.Globalization;
     using System.IO;
     using System.Linq;
@@ -28,15 +30,19 @@
 
             // ReSharper restore AssignNullToNotNullAttribute
             var outputFileName = vsProject.Properties.Item("OutputFileName").Value.ToString();
-            if (String.IsNullOrWhiteSpace(outputFileName)) {
-                outputFileName = vsProject.Properties.Item("AssemblyName").Value.ToString();
-                if (String.IsNullOrWhiteSpace(outputFileName)) {
-                    outputFileName = vsProject.Name;
-                }
-            }
 
-            if (!outputFileName.EndsWith(".dll", StringComparison.InvariantCultureIgnoreCase)) {
-                outputFileName = outputFileName + ".dll";
+            if (String.IsNullOrWhiteSpace(outputFileName)) {
+                var assemblyName = vsProject.Properties.Item("AssemblyName").Value.ToString();
+                if (String.IsNullOrWhiteSpace(assemblyName)) {
+                    assemblyName = vsProject.Name;
+                }
+                if (File.Exists(Path.Combine(outputDirectory, $"{assemblyName}.dll"))) {
+                    outputFileName = $"{assemblyName}.dll";
+                } else if (File.Exists(Path.Combine(outputDirectory, $"{assemblyName}.exe"))) {
+                    outputFileName = $"{assemblyName}.exe";
+                } else {
+                    return String.Empty;
+                }
             }
 
             var assemblyPath = Path.Combine(outputDirectory, outputFileName);
@@ -108,7 +114,7 @@
         }
 
         internal static Boolean SkipLoadingAssembly(String assemblyName) {
-            assemblyName = assemblyName.ToLower();
+            assemblyName = assemblyName.ToLower(CultureInfo.InvariantCulture);
             if (assemblyName.StartsWith("windows.")) {
                 return true;
             }
